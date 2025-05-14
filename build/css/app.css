@@ -482,14 +482,30 @@ body > section {
 }
 .body h1 {
   text-align: center;
+  padding: 3rem;
 }
 
 .cita {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5rem;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
 }
 .cita img {
-  height: 100px;
-  right: 100px;
+  width: 200px;
+  border-radius: 30px;
+}
+@media (min-width: 768px) {
+  .cita {
+    grid-template-rows: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    justify-items: center;
+    align-items: center;
+    padding-bottom: 3rem;
+  }
+  .cita img {
+    height: 300px;
+    width: 280px;
+  }
 }

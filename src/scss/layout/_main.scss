@@ -7,15 +7,30 @@
     h1
     {
         text-align: center;
+        padding: 3rem;
     }
 }
 .cita
 {
-    @include m.grid(2);
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
     img
     {
-        height: 100px;
-        right: 100px;
+        width: 200px;
+        border-radius: 30px;
     }
-
+    @include m.tablet
+    {
+        grid-template-rows: auto;
+        @include m.grid(2,0);
+        justify-items: center;
+        align-items: center;
+        padding-bottom: 3rem;
+        img
+        {
+            height: 300px;
+            width: 280px;
+        }
+    }
 }

@@ -1,0 +1,21 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.body
+{
+    background: v.$verde;
+    h1
+    {
+        text-align: center;
+    }
+}
+.cita
+{
+    @include m.grid(2);
+    img
+    {
+        height: 100px;
+        right: 100px;
+    }
+
+}

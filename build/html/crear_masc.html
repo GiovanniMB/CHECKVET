@@ -36,7 +36,7 @@
     <main class="body">
         <div class="contenedor">
             <h1>Registrar mascota</h1>
-            <div class="form-mascota">
+            <div class="form">
                 <form action="">
                     <div class="row">
                         <div class="form-group">
@@ -47,16 +47,43 @@
                     <div class="row">
                         <div class="form-group">
                             <label for="especie" class="label">Especie: </label>
-                            <input type="text" placeholder="Especie de la mascota" name="especie" id="especie" required>
+                            <select name="especie" id="especie">
+                                <option value="" selected disabled>Seleccionar especie</option>
+                                <option value="1">Perro</option>
+                                <option value="2">Gato</option>
+                                <option value="0">Otro</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group">
+                        <div class="form-group" id="div-especie" style="display: none;">>
+                            <label for="n_especie" class="label"> Otro: </label>
+                            <input type="text" placeholder="Especie de la mascota" name="n_especie" id="n_especie">
+                        </div>
+                        <div class="form-group" id="div-raza">
                             <label for="raza" class="label">Raza: </label>
                             <input type="text" placeholder="Raza de la mascota" name="raza" id="raza">
                         </div>
                     </div>
+
+                    <script>
+                        document.getElementById('especie').addEventListener('change', function () {
+                            if (this.value === '0') {
+                                document.getElementById('div-raza').style.display = 'none';
+                                document.getElementById('div-especie').style.display = 'flex';
+                            } else {
+                                document.getElementById('div-especie').style.display = 'none';
+                                document.getElementById('div-raza').style.display = 'flex';
+                            }
+                        });
+                    </script>
+
                     <div class="row">
+                        <div class="form-group">
+                            <label for="dueno" class="label">Dueño: </label>
+                            <select name="dueno" id="dueno">
+                                <option value="" selected disabled>Seleccionar dueño</option>
+                                <option value="">Dueño</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="nacimiento" class="label">Fecha de nacimiento: </label>
                             <input type="date" name="nacimiento" id="nacimiento">
@@ -99,13 +126,7 @@
                     </script>
 
                     <div class="row">
-                        <div class="form-group">
-                            <label for="dueno" class="label">Dueño: </label>
-                            <select name="dueno" id="dueno">
-                                <option value="" selected disabled>Seleccionar dueño</option>
-                                <option value="">Dueño</option>
-                            </select>
-                        </div>
+                        
                     </div>
                     <div class="row"><input type="submit" value="Registrar" class="submit"></div>
 

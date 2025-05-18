@@ -1,47 +1,27 @@
-import { src, dest, watch, parallel } from 'gulp';
-import * as dartSass from 'sass';
-import gulpSass from 'gulp-sass';
-import fileInclude from 'gulp-file-include';
+import { src, dest, watch, series } from 'gulp'
+import * as dartSass from 'sass'
+import gulpSass from 'gulp-sass'
 
-const sass = gulpSass(dartSass);
+const sass = gulpSass(dartSass)
 
+export function js( done ) {
+    src('src/js/app.js')
+        .pipe( dest('build/js') ) 
 
-const paths = {
-  scss: 'src/scss/**/*.scss',
-  html: 'src/html/pages/**/*.html',
-  partials: 'src/html/partials/**/*.html',
-  dest: {
-    css: 'build/css',
-    html: 'build/html'
-  }
-};
-
-
-export function css() {
-  return src(paths.scss)
-    .pipe(sass().on('error', sass.logError))
-    .pipe(dest(paths.dest.css));
+    done()
 }
 
+export function css( done ) {
+    src('src/scss/app.scss', {sourcemaps: true})
+        .pipe( sass().on('error', sass.logError) )
+        .pipe( dest('build/css', {sourcemaps: '.'}) )
 
-export function html() {
-  return src(paths.html)
-    .pipe(fileInclude({
-      prefix: '@@',
-      basepath: '@root',
-      indent: true,
-      context: {
-        projectName: 'CHECKVET',
-        version: '1.0.0'
-      }
-    }))
-    .pipe(dest(paths.dest.html));
+    done()
 }
-
 
 export function dev() {
-  watch(paths.scss, css);
-  watch([paths.html, paths.partials], html);
+    watch('src/scss/**/*.scss', css)
+    watch('src/js/**/*.js', js)
 }
 
-export default parallel(css, html);
+export default series( js, css, dev )

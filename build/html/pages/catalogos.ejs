@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title>CHECKVET - Inicio</title>
+    <link rel="stylesheet" href="/build/css/app.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="header">
+        <div class="contenedor contenido-header">
+            <nav class="navegacion-principal">
+                <h1><a href="#">CHECKVET</a></h1>
+                <a href="#">Agenda</a>
+                <a href="#">Clinicas</a>
+                <a href="#">Veterinarios</a>
+                <a href="#">Mascotas</a>
+                <a href="#">Servicios</a>
+                <a href="#">Acerca</a>
+            </nav>
+            <div class="login">
+                <a href="">Ingresar</a>
+                <a href="">Registrarse</a>
+            </div>
+            <div class="out">
+                <span>Bienvenido:</span>&nbsp;<span>nombre</span>&nbsp;
+            </div>
+        </div>
+    </header>
+    <main class="body">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <div class="contenedor">
+            <h1>Catálogos</h1>
+            <div class="form">
+                <form action="">
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="radio" name="opciones" id="btn-especie" placeholder="Especie">
+                            <label for="btn-especie">Especie</label>
+                            
+                            
+                            <!--<button type="radio" id="btn-especie">Especie</button>
+                            <button type="radio" id="btn-persona">Persona</button>
+                            <button type="radio" id="btn-clinica">Clinicas</button>-->
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="opciones" id="btn-persona" placeholder="Persona">
+                            <label for="btn-persona">Persona</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="opciones" id="btn-clinica" placeholder="Clinica">
+                            <label for="btn-clinica">Clinica</label>
+                        </div>
+                    </div>
+
+                    <div class="row" id="especie" style="display: none;">
+                        <table style="width:100%">
+                            <tr>
+                              <th>ID</th>
+                              <th>Especie</th>
+                              <th>Acciones</th>
+                            </tr>
+
+                            <tr>
+                              <td>1</td>
+                              <td>Perro</td>
+                              <td>
+                                <button type="button">Editar</button>
+                                <button type="button">Eliminar</button>
+                              </td>
+                            </tr>
+
+                          </table>
+                    </div>
+
+                    <div class="row" id="persona" style="display: none;">
+                        <table style="width:100%">
+                            <tr>
+                              <th>ID</th>
+                              <th>Nombre</th>
+                              <th>Apellido</th>
+                              <th>Tipo</th>
+                              <th>Acciones</th>
+                            </tr>
+
+                            <tr>
+                              <td>1</td>
+                              <td>Maria</td>
+                              <td>Anders</td>
+                              <td></td>
+                              <td>
+                                <button type="button">Editar</button>
+                                <button type="button">Eliminar</button>
+                            </td>
+                            </tr>
+
+                          </table>
+                    </div>
+
+                    <div class="row" id="clinica" style="display: none;">
+                        <table style="width:100%">
+                            <tr>
+                              <th>ID</th>
+                              <th>Nombre</th>
+                              <th>Dirección</th>
+                              <th>Empresa</th>
+                              <th>Acciones</th>
+                            </tr>
+
+                            <tr>
+                              <td>1</td>
+                              <td>Maria</td>
+                              <td></td>
+                              <td></td>
+                              <td>
+                                <button type="button">Editar</button>
+                                <button type="button">Eliminar</button>
+                            </td>
+                            </tr>
+
+                          </table>
+                    </div>
+
+                    <script>
+                        $(document).ready(function () {
+                            $("#btn-especie").click(function () {
+                                $("#persona").hide();
+                                $("#especie").show();
+                                $("#clinica").hide();
+        
+                            });
+        
+                            $("#btn-persona").click(function () {
+                                $("#persona").show();
+                                $("#especie").hide();
+                                $("#clinica").hide();
+        
+                            });
+        
+                            $("#btn-clinica").click(function () {
+                                $("#clinica").show();
+                                $("#especie").hide();
+                                $("#persona").hide();
+        
+                            });
+                        });
+                    </script>
+
+
+
+                </form>
+
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div>
+            <p>
+                &copy; 2025 CHECKVET, Inc. | WebApp Desarrollada con Node.js | Autor: &middot; <a>Millan</a>&middot;
+                <a>Vargas &middot;
+            </p>
+        </div>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

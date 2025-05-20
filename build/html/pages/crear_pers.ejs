@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title>CHECKVET - Inicio</title>
+    <link rel="stylesheet" href="/build/css/app.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="contenedor contenido-header">
+            <nav class="navegacion-principal">
+                <h1><a href="#">CHECKVET</a></h1>
+                <a href="#">Agenda</a>
+                <a href="#">Clinicas</a>
+                <a href="#">Veterinarios</a>
+                <a href="#">Mascotas</a>
+                <a href="#">Servicios</a>
+                <a href="#">Acerca</a>
+            </nav>
+            <div class="login">
+                <a href="">Ingresar</a>
+                <a href="">Registrarse</a>
+            </div>
+            <div class="out">
+                <span>Bienvenido:</span>&nbsp;<span>nombre</span>&nbsp;
+            </div>
+        </div>
+    </header>
+    <main class="body">
+        <div class="contenedor">
+            <h1>Registrar persona</h1>
+            <div class="form">
+                <form action="">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="nombre" class="label">Nombre (*) </label>
+                            <input type="text" placeholder="Nombre de la persona" name="nombre" id="nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido" class="label">Apellido Paterno (*) </label>
+                            <input type="text" placeholder="Apellido paterno de la persona" name="apellido"
+                                id="apellido">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="apellido2" class="label">Apellido Materno (*) </label>
+                            <input type="text" placeholder="Apellido materno de la persona" name="apellido2"
+                                id="apellido2">
+                        </div>
+                        <div class="form-group">
+                            <label for="rol" class="label">Tipo de persona: </label>
+                            <select name="rol" id="rol">
+                                <option value="" selected disabled>Seleccionar tipo de persona</option>
+                                <option value="veterinario">Veterinario</option>
+                                <option value="cliente">Cliente</option>
+                            </select>
+                        </div>
+                        
+                    </div>
+                    <div class="row">
+                        
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="telefono" class="label">Teléfono: </label>
+                            <input type="text" placeholder="55-#### ####" name="telefono" id="telefono" required>
+                        </div>
+                        
+                    </div>
+
+                    <div class="dep-check" id="cliente" style="display: none;"> 
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="curp" class="label">CURP: </label>
+                                <input type="text" placeholder="CURP de la persona" name="curp" id="curp">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dep-check" id="veterinario" style="display: none;">
+                        <div class="row">
+                            <div class="form-group">
+                                <label for="cedula" class="label">Cédula: </label>
+                                <input type="text" placeholder="Cédula del profesional" name="cedula" id="cedula">
+                            </div>
+                            <div class="form-group">
+                                <label for="clinica">Clínica: </label>
+                                <select name="clinica" id="clinica">
+                                    <option value="">Nombre clínica</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        const select = document.getElementById('rol');
+                        const div = document.getElementById('veterinario');
+                        const div2 = document.getElementById('cliente');
+
+                        select.addEventListener("change", function () {
+                            if (this.value === "veterinario") {
+                                div.style.display = "flex"; // Mostrar el div
+                                div2.style.display = "none"; // Ocultar el div
+                            } else if (this.value === "cliente") {
+                                div2.style.display = "flex"; // Mostrar el div
+                                div.style.display = "none"; // Ocultar el div
+                            }
+                        });
+                    </script>
+
+                    <div class="row"><input type="submit" value="Registrar" class="submit"></div>
+
+                </form>
+
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div>
+            <p>
+                &copy; 2025 CHECKVET, Inc. | WebApp Desarrollada con Node.js | Autor: &middot; <a>Millan</a>&middot;
+                <a>Vargas &middot;
+            </p>
+        </div>
+    </footer>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

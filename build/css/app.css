@@ -509,3 +509,117 @@ body > section {
     width: 280px;
   }
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 2rem;
+}
+
+.label{
+  color: #284B63;
+  font-weight: bolder;
+  font-size: 2.4rem;
+  padding: 10px;
+  margin: 5px; ;
+}
+
+input{
+  color: #284B63;
+  font-weight: bolder;
+  font-size: 2.4rem;
+  padding-top: 10px;
+}
+
+.submit{
+  color: #bcc7c1;
+  background-color:  #284B63;
+  font-weight: bolder;
+  font-size: 2.4rem;
+  padding-top: 10px;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.form-group{
+  color: #183548;
+  font-weight: bolder;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 2.4rem;
+  padding: 10px;
+}
+
+.form{
+  color: #183548;
+  font-weight: bolder;
+  font-size: 2.4rem;
+  padding-top: 10px;
+}
+
+select{
+  color: #183548;
+  font-weight: bolder;
+  font-size: 2.4rem;
+  padding-top: 10px;
+}
+
+.dep-check{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+#file-upload {
+  display: none;
+}
+
+#upload-button {
+  /* Estilos del botón */
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+img{
+  margin: 2rem;
+  border: 3px solid #183548;
+  border-radius: 2rem;
+
+  }
+
+  button{ 
+    color: #bcc7c1;
+    background-color:  #284B63;
+    font-weight: bolder;
+    font-size: 2.4rem;
+    padding-top: 10px;
+    margin-left: 6rem;
+    margin-right: 6rem;
+    margin-bottom: 2rem;
+  }
+
+  table, th, td {
+    border:3px solid black;
+    border-collapse: collapse;
+    padding: 1rem;
+  }
+  table{
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  th{
+    background-color: #183548;
+    color: #bcc7c1;
+  }

@@ -1,16 +1,29 @@
-const mysql = require('mysql');
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config();
 
-let connection = mysql.createConnection(
-    {
-        host:'localhost',
-        user:'root',
-        password:'Millan2801',
-        database:'dbvet'
-    }
-);
-connection.connect(function(error)
+const pool = mysql.createPool(
 {
-    if(error) throw error;
-    console.log('la conexion a sido exitosa');
+  host: process.env.host,
+  database: process.env.database,
+  user: process.env.user,
+  password: process.env.password,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
-module.exports = connection;
+
+
+const getConnection = async () => 
+{
+  try 
+  {
+    const connection = await pool.getConnection();
+    return connection;
+  } catch (error) 
+  {
+    throw error; 
+  }
+};
+
+export default getConnection;

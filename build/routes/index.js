@@ -1,7 +1,20 @@
 import { Router} from "express";
+import { showLogin, login, logout, dashboard,showRegister, register } from '../controller/authController.js';
+
 
 const router = Router();
 router.get('/',(req,res)=>res.render('index'));
+
+router.get('/register', showRegister);
+router.post('/register', register);
+
+router.get('/prueba', showLogin);
+router.post('/login', login);
+router.get('/dashboard', dashboard);
+router.get('/logout', logout);
+
+
+
 
 router.get('/login',(req,res)=>{
     res.render('login')

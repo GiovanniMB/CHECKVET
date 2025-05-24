@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Admin",
+    "email": "admin@example.com",
+    "password": "$2a$10$uZ/ymkwnJppPoM8CyN/hV.r.8Xjs8E77XzkepOfjbsHZ0SzEWUKrG"
+  },
+  {
+    "name": "Emiliano",
+    "email": "emilianov616@gmail.com",
+    "password": "$2b$10$PFCt8InUsis4ETYeATM71.EIo/OHRQYCbyrIaPTjdfzZbW6eqSozW"
+  },
+  {
+    "name": "Emiliano",
+    "email": "ejemplo.2@gmail.com",
+    "password": "$2b$10$3uVVqA40IZ4h5JUeeS2SMuE0I986IKxicrzzmRbdR3NnPKBfYqP16"
+  }
+]

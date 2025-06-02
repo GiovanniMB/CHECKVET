@@ -6,6 +6,7 @@ import session from 'express-session';
 import indexRoutes from './routes/index.js';
 import dotenv from 'dotenv';
 import conexion from '../database/db.js';
+import flash from 'connect-flash';
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,7 +26,12 @@ app.use(session({
     saveUninitialized: true
 }));
 
+app.use(flash());
 
+app.use((req, res, next) => {
+  res.locals.toast_msg = req.flash('toast_msg')[0] || null;  // También puedes ponerlo aquí para que esté global
+  next();
+});
 
 app.set('views', join(__dirname, 'html/pages'));
 app.set('view engine', 'ejs');

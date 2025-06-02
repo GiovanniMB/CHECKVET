@@ -1,6 +1,9 @@
 import { Router} from "express";
 import { isAuthenticated } from "../middleware/auth.js";
 import { showLogin, login, logout, dashboard,showRegister, register } from '../controller/authController.js';
+import conexion from "../../database/db.js";
+import bcryptjs from 'bcryptjs';
+
 
 
 const router = Router();
@@ -23,7 +26,9 @@ router.get('/login',(req,res)=>{
 
 
 router.get('/crear/persona', isAuthenticated,(req,res)=>{
-    res.render('crear_pers')
+    res.render('crear_pers', {
+    toast_msg: req.flash('toast_msg')[0] || null
+  });
 });
 
 router.get('/catalogos',isAuthenticated,(req,res)=>{
@@ -43,16 +48,61 @@ router.get('/crear/clinica',isAuthenticated,(req,res)=>{
     res.render('crear_clinica')
 });
 
-router.post('/crear/cliente',isAuthenticated,(req,res)=>{
-    const nombre = req.body.nombre;
-    const apellidoP = req.body.apellido;
-    const apellidoM = req.body.apellido2;
-    const rol = req.body.rol;
-    const telefono = req.body.telefono;
-    const correo = req.body.correo;
-    const curp = req.body.curp;
-    const cedula = req.body.cedula;
-    const clinica = req.body.clinica;
+router.post('/crear/usuario', isAuthenticated, async (req, res) => {
+  const { nombre, apellido, apellido2, rol, telefono, email, curp, cedula, clinica, pass } = req.body;
+  const password = await bcryptjs.hash(pass, 8);
+
+  if (rol === 'cliente') {
+    conexion.query(
+      'INSERT INTO persona SET ?',
+      {
+        Nombre: nombre,
+        ApellidoPaterno: apellido,
+        ApellidoMaterno: apellido2,
+        Telefono: telefono,
+        Correo: email,
+        Contrasena: password,
+        Curp: curp,
+        perfil_id: 2
+      },
+      (error, results) => {
+        if (error) {
+          console.log(error);
+          req.flash('toast_msg', 'Error al registrar al cliente.');
+        } else {
+          req.flash('toast_msg', 'Cliente registrado correctamente.');
+        }
+        return res.redirect('/crear/persona'); // <- redirige siempre al final
+      }
+    );
+  } else if (rol === 'veterinario') {
+    conexion.query(
+      'INSERT INTO persona SET ?',
+      {
+        Nombre: nombre,
+        ApellidoPaterno: apellido,
+        ApellidoMaterno: apellido2,
+        Telefono: telefono,
+        Correo: email,
+        Contrasena: password,
+        cedula: cedula,
+        IdConsultorio: clinica,
+        perfil_id: 1
+      },
+      (error, results) => {
+        if (error) {
+          console.log(error);
+          req.flash('toast_msg', 'Error al registrar al veterinario.');
+        } else {
+          req.flash('toast_msg', 'Veterinario registrado correctamente.');
+        }
+        return res.redirect('/crear/persona'); // <- redirige siempre al final
+      }
+    );
+  } else {
+    req.flash('toast_msg', 'Rol inválido.');
+    return res.redirect('/crear/persona');
+  }
 });
 
 export default router;

@@ -12,6 +12,8 @@ router.get('/',(req,res)=>res.render('index'));
 router.get('/formMascota',(req,res)=>res.render('formMascota'));
 router.get('/mascotas',(req,res)=>res.render('mascotas'));
 router.get('/mascota',(req,res)=>res.render('mascota'));
+router.get('/vacunas',(req,res)=>res.render('vacunas'));
+router.get('/desparasitaciones',(req,res)=>res.render('desparasitacion'));
 
 
 

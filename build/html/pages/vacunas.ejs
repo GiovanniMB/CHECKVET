@@ -121,27 +121,13 @@
             <script src="/registroController.js"></script>
             <script>
                 document.querySelectorAll('.password-toggle').forEach(toggle => {
-                    toggle.addEventListener('click', function () {
-                        const passwordInput = this.previousElementSibling;
-                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                        passwordInput.setAttribute('type', type);
-                        this.querySelector('i').classList.toggle('bi-eye');
-                        this.querySelector('i').classList.toggle('bi-eye-slash');
-                    });
+
                 });
 
                 // Validación de formulario
                 document.getElementById('registro-form').addEventListener('submit', function (e) {
                     e.preventDefault();
 
-                    // Validar que las contraseñas coincidan
-                    const password = document.getElementById('password').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-
-                    if (password !== confirmPassword) {
-                        alert('Las contraseñas no coinciden');
-                        return;
-                    }
 
                     if (this.checkValidity()) {
                         alert('Formulario enviado correctamente');

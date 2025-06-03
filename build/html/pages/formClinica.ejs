@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/head')%>
+        <title>CHECKVET - Registro</title>
+</head>
+
+<body>
+    <%- include('../partials/header')%>
+
+        <main role="main" class="py-4">
+            <div class="container">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="card-title text-center mb-0"><i class="bi bi-pencil-square me-2"></i>Registro de
+                            Clinica</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form id="registro-form" novalidate>
+
+<!-- Sección Clinica -->
+                            <section class="form-section" aria-labelledby="datos-clinica-heading">
+                                <h2 id="datos-clinica-heading"><i class="bi bi-hospital"></i> Datos de Clinica
+                                </h2>
+                                
+
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                                placeholder=" " required>
+                                            <label for="nombre" class="required-field">Nombre de la Clinica</label>
+                                        </div>
+                                    </div>
+
+                                    
+                                </div>
+                            </section>
+
+
+                            <!-- Sección Dirección -->
+                            <section class="form-section" aria-labelledby="datos-direccion-heading">
+                                <h2 id="datos-direccion-heading"><i class="bi bi-geo-alt me-2"></i>Datos de Dirección
+                                </h2>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="estado" name="estado" required>
+                                                <option value="" selected disabled>Seleccione una opción</option>
+                                            </select>
+                                            <label for="estado" class="required-field">Estado</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="Municipio" name="Municipio" required>
+                                            </select>
+                                            <label for="Municipio" class="required-field">Municipio/Alcaldía</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="Colonia" name="Colonia" required>
+                                            </select>
+                                            <label for="Colonia" class="required-field">Colonia</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="Calle" name="Calle"
+                                                placeholder=" " required>
+                                            <label for="Calle" class="required-field">Calle</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="numero" name="numero"
+                                                placeholder=" " required>
+                                            <label for="numero" class="required-field">Número Exterior</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="numeroInt" name="numeroInt"
+                                                placeholder=" ">
+                                            <label for="numeroInt">Número Interior</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="cp" name="cp" placeholder=" "
+                                                pattern="[0-9]{5}" required>
+                                            <label for="cp" class="required-field">Código Postal</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="referencias" name="referencias"
+                                                placeholder=" ">
+                                            <label for="referencias">Referencias</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            
+                            <!-- Botones de acción -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="reset" class="btn btn-outline-secondary px-4">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                                </button>
+
+                                <button type="submit" class="btn btn-success px-4">
+                                    <i class="bi bi-save me-2"></i>Guardar Registro
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <%- include('../partials/footer')%>
+
+            <script src="/mascotaService.js"></script>
+            <script src="/registroController.js"></script>
+            <script>
+                document.querySelectorAll('.password-toggle').forEach(toggle => {
+                    toggle.addEventListener('click', function () {
+                        const passwordInput = this.previousElementSibling;
+                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                        passwordInput.setAttribute('type', type);
+                        this.querySelector('i').classList.toggle('bi-eye');
+                        this.querySelector('i').classList.toggle('bi-eye-slash');
+                    });
+                });
+
+                // Validación de formulario
+                document.getElementById('registro-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    // Validar que las contraseñas coincidan
+                    const password = document.getElementById('password').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+
+                    if (password !== confirmPassword) {
+                        alert('Las contraseñas no coinciden');
+                        return;
+                    }
+
+                    if (this.checkValidity()) {
+                        alert('Formulario enviado correctamente');
+                        // this.submit();
+                    } else {
+                        e.stopPropagation();
+                        this.classList.add('was-validated');
+                    }
+                });
+
+            </script>
+</body>
+
+</html>

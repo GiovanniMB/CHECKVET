@@ -21,7 +21,6 @@ app.set('views', join(__dirname, 'html/pages'));
 app.set('view engine', 'ejs');
 app.use(indexRoutes);
 
-<<<<<<< HEAD
 app.use(express.static(join(__dirname,'controller')));
 app.use(express.static(join(__dirname,'service')));
 app.use(express.static(join(__dirname,'img')));
@@ -31,12 +30,4 @@ app.use('/popper', express.static(join(__dirname, '../node_modules/@popperjs/cor
 
 app.listen(4000);
 console.log('Server is listening on port',4000);
-=======
-app.use(express.static(join(__dirname, 'css')));
-app.use(express.static(join(__dirname, 'controller')));
-app.use(express.static(join(__dirname, 'service')));
->>>>>>> 02e0c838faaf3af9afc5f2687e4f7cb908acbdac
 
-app.listen(4000, () => {
-    console.log('Server is listening on port', 4000);
-});

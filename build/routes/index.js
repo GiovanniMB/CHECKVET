@@ -1,11 +1,7 @@
 import { Router} from "express";
-<<<<<<< HEAD
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
-=======
-import { showLogin, login, logout, dashboard,showRegister, register } from '../controller/authController.js';
->>>>>>> 02e0c838faaf3af9afc5f2687e4f7cb908acbdac
 
 
 const router = Router();
@@ -68,40 +64,7 @@ router.post('/subirImagen', upload.single('archivoImagen'), (req, res) => {
     });
 });
 
-router.get('/register', showRegister);
-router.post('/register', register);
-
-router.get('/prueba', showLogin);
-router.post('/login', login);
-router.get('/dashboard', dashboard);
-router.get('/logout', logout);
 
 
-
-
-router.get('/login',(req,res)=>{
-    res.render('login')
-});
-
-router.get('/crear/persona',(req,res)=>{
-    res.render('crear_pers')
-});
-
-router.get('/catalogos',(req,res)=>{
-    res.render('catalogos')
-
-});
-
-router.get('/cita',(req,res)=>{
-    res.render('cita')
-});
-
-router.get('/crear/mascota',(req,res)=>{
-    res.render('crear_masc')
-});
-
-router.get('/crear/clinica',(req,res)=>{
-    res.render('crear_clinica')
-});
 
 export default router;

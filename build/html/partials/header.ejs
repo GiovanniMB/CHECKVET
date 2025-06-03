@@ -1,21 +1,40 @@
-<header class="header">
-    <div class="contenedor contenido-header">
-        <nav class="navegacion-principal">
-            <h1><a href="#">CHECKVET</a></h1>
-            <a href="#">Agenda</a>
-            <a href="#">Clinicas</a>
-            <a href="#">Veterinarios</a>
-            <a href="#">Mascotas</a>
-            <a href="#">Servicios</a>
-            <a href="#">Acerca</a>
-        </nav>
-        <div class="login">
-            <a href="">Ingresar</a>
-            <a href="">Registrarse</a>
-        </div>
-        <div class="out">
-            <span>Bienvenido:</span>&nbsp;<span>nombre</span>&nbsp;
-        </div>
+<nav class="navbar navbar-expand-lg bg-success navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold fs-4" href="#">
+      <i class="bi bi-heart-pulse me-2"></i>CHECKVET
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Agenda</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Clinicas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Veterinarios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/mascotas">Mascotas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Servicios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Acerca</a>
+        </li>
+      </ul>
+      <div class="me-auto mb-2 mb-lg-0">
+        <a class="btn btn-outline-light">Ingresar</a>&nbsp;
+        <a class="btn btn-light text-success">Registrarse</a>
+      </div>	    
+      <div class="me-auto mb-2 mb-lg-0">
+        <span class="text-light">Bienvenido</span>&nbsp;<span class="text-light"></span>&nbsp;
+        <a class="btn btn-outline-light ms-2">Salir</a>
+      </div>   
     </div>
-</header>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </div>
+</nav>

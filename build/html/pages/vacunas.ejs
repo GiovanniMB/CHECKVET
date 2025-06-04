@@ -18,9 +18,9 @@
                         <h4 class="card-title text-center mb-0"><i class="bi bi-pencil-square me-2"></i>Registro de
                             Vacunas</h4>
                     </div>
+                    <form id="registro-form" novalidate>
+                        <div class="card-body">
 
-                    <div class="card-body">
-                        <form id="registro-form" novalidate>
                             <!-- Sección Mascota -->
                             <section class="form-section" aria-labelledby="datos-mascota-heading">
                                 <h2 id="datos-mascota-heading"><i class="bi bi-heart-pulse me-2"></i>Mascota
@@ -29,112 +29,131 @@
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="expediente"
-                                                name="expediente" placeholder=" " required readonly>
+                                            <input type="text" class="form-control" id="expediente" name="expediente"
+                                                placeholder=" " required readonly>
                                             <label for="expediente" class="required-field">Nombre de la Mascota </label>
+                                            <input type="number" class="visually-hidden" name="Mascota" id="Mascota"
+                                                value="1">
+
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
-                                
-                                </div>
+
                             </section>
+                        </div>
 
-                            
-                            <!-- Sección Vacuna -->
-                            <section class="form-section" aria-labelledby="datos-vacuna-heading">
-                                <h2 id="datos-vacuna-heading"><i class="bi bi-eyedropper"></i> Datos de Vacuna
-                                </h2>
 
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="vacuna" name="vacuna"
-                                                placeholder=" " required>
-                                            <label for="vacuna" class="required-field">Nombre de la Vacuna</label>
-                                        </div>
-                                    </div>
+                        <!-- Sección Vacuna -->
+                        <section class="form-section" aria-labelledby="datos-vacuna-heading">
+                            <h2 id="datos-vacuna-heading"><i class="bi bi-eyedropper"></i> Datos de Vacuna
+                            </h2>
 
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="laboratorio" name="laboratorio"
-                                                 placeholder=" " required>
-                                            <label for="laboratorio" class="required-field"> Laboratorio </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="lote" name="lote"
-                                                 placeholder=" " required>
-                                            <label for="lote" class="required-field"> Lote </label>
-                                        </div>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="vacuna" name="vacuna"
+                                            placeholder=" " required>
+                                        <label for="vacuna" class="required-field">Nombre de la Vacuna</label>
                                     </div>
                                 </div>
 
-                                <div class="row g-3 mt-2">
-                                    <div class="col-md-3">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" id="fecha" name="fecha">
-                                            <label for="fecha">Fecha de Vacunación</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" name="fechaProxima" id="fechaProxima">
-                                            <label for="fechaProxima">Fecha de Proxima Vacunación</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="observaciones" name="observaciones"
-                                                 placeholder=" " required>
-                                            <label for="observaciones" class="required-field"> Observaciones </label>
-                                        </div>
-
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="laboratorio" name="laboratorio"
+                                            placeholder=" " required>
+                                        <label for="laboratorio" class="required-field"> Laboratorio </label>
                                     </div>
                                 </div>
-                            </section>
-
-
-
-                            <!-- Botones de acción -->
-                            <div class="d-flex justify-content-between mt-4">
-                                <button type="reset" class="btn btn-outline-secondary px-4">
-                                    <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
-                                </button>
-
-                                <button type="submit" class="btn btn-success px-4">
-                                    <i class="bi bi-save me-2"></i>Guardar Registro
-                                </button>
+                                <div class="col-md-4">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="lote" name="lote" placeholder=" "
+                                            required>
+                                        <label for="lote" class="required-field"> Lote </label>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
+
+                            <div class="row g-3 mt-2">
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="fecha" name="fecha">
+                                        <label for="fecha">Fecha de Vacunación</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" name="fechaProxima" id="fechaProxima">
+                                        <label for="fechaProxima">Fecha de Proxima Vacunación</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="observaciones" name="observaciones"
+                                            placeholder=" " required>
+                                        <label for="observaciones" class="required-field"> Observaciones </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </section>
+
+
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="reset" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                            </button>
+
+                            <button type="submit" class="btn btn-success px-4">
+                                <i class="bi bi-save me-2"></i>Guardar Registro
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
             </div>
         </main>
         <%- include('../partials/footer')%>
 
             <script src="/mascotaService.js"></script>
-            <script src="/registroController.js"></script>
             <script>
-                document.querySelectorAll('.password-toggle').forEach(toggle => {
-
-                });
-
-                // Validación de formulario
-                document.getElementById('registro-form').addEventListener('submit', function (e) {
+                document.getElementById('registro-form').addEventListener('submit', async function (e) {
                     e.preventDefault();
 
+                    const formData = {
+                        expediente: document.getElementById('expediente').value,
+                        vacuna: document.getElementById('vacuna').value,
+                        laboratorio: document.getElementById('laboratorio').value,
+                        lote: document.getElementById('lote').value,
+                        fecha: document.getElementById('fecha').value,
+                        fechaProxima: document.getElementById('fechaProxima').value,
+                        observaciones: document.getElementById('observaciones').value
+                    };
 
-                    if (this.checkValidity()) {
-                        alert('Formulario enviado correctamente');
-                        // this.submit();
-                    } else {
-                        e.stopPropagation();
-                        this.classList.add('was-validated');
+                    try {
+                        const res = await fetch('http://localhost:3000/vacuna/registro-vacuna', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(formData)
+                        });
+
+                        const data = await res.json();
+
+                        if (res.ok) {
+                            alert(data.message);
+                            this.reset(); // limpia el formulario
+                        } else {
+                            alert(data.error || 'Error al guardar la vacuna');
+                        }
+
+                    } catch (error) {
+                        console.error("Error al enviar vacuna:", error);
+                        alert("Error de conexión con el servidor.");
                     }
                 });
 

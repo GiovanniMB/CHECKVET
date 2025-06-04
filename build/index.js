@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import bcryptjs from 'bcryptjs';
 import session from 'express-session';
 import indexRoutes from './routes/index.js';
+import vacunaRoutes from './controller/vacunaController.js';
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,6 +21,7 @@ app.use(session({
 app.set('views', join(__dirname, 'html/pages'));
 app.set('view engine', 'ejs');
 app.use(indexRoutes);
+app.use('/vacuna', vacunaRoutes);
 
 app.use(express.static(join(__dirname,'controller')));
 app.use(express.static(join(__dirname,'service')));
@@ -27,6 +29,8 @@ app.use(express.static(join(__dirname,'img')));
 app.use(express.static(join(__dirname,'css')));
 app.use('/bootstrap', express.static(join(__dirname, '../node_modules/bootstrap')));
 app.use('/popper', express.static(join(__dirname, '../node_modules/@popperjs/core')));
+
+
 
 app.listen(4000);
 console.log('Server is listening on port',4000);

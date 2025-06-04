@@ -18,6 +18,7 @@ router.get('/clinicas/registro',(req,res)=>res.render('formClinica'));
 router.get('/veterinarios/registro',(req,res)=>res.render('formVet'));
 router.get('/clinicas',(req,res)=>res.render('listadoClinicas'));
 router.get('/veterinarios',(req,res)=>res.render('listadoVet'));
+router.get('/consulta',(req,res)=>res.render('formConsulta'));
 
 
 

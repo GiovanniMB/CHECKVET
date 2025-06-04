@@ -1,5 +1,5 @@
 import express from 'express';
-import db from '../db/connection.js'; // importa tu conexión MySQL como módulo
+import db from '../database/db.js'; // importa tu conexión MySQL como módulo
 const router = express.Router();
 
 router.post('/registro-vacuna', async (req, res) => {
@@ -16,7 +16,7 @@ router.post('/registro-vacuna', async (req, res) => {
 
     const query = `
       INSERT INTO vacuna (nombreVac, laboratorio, lote, fechaAplicion, fechaProx, notas, idExpediente)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
     await db.execute(query, [

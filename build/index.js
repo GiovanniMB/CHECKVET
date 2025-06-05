@@ -4,7 +4,10 @@ import { fileURLToPath } from 'url';
 import bcryptjs from 'bcryptjs';
 import session from 'express-session';
 import indexRoutes from './routes/index.js';
-import vacunaRoutes from './controller/vacunaController.js';
+import vacunaRoutes from './routes/vacuna.js';
+import desparasitacionRoutes from './routes/desparasitacion.js';
+
+
 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -30,6 +33,11 @@ app.use(express.static(join(__dirname,'css')));
 app.use('/bootstrap', express.static(join(__dirname, '../node_modules/bootstrap')));
 app.use('/popper', express.static(join(__dirname, '../node_modules/@popperjs/core')));
 
+
+app.use(express.static(join(__dirname, 'public')));
+
+app.use('/desparasitacion', desparasitacionRoutes);
+app.use('/vacuna', vacunaRoutes);
 
 
 app.listen(4000);

@@ -29,119 +29,137 @@
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="expediente"
-                                                name="expediente" placeholder=" " required readonly>
+                                            <input type="text" class="form-control" id="expediente" name="expediente"
+                                                placeholder=" "  readonly value="Nombre mascota">
                                             <label for="expediente" class="required-field">Nombre de la Mascota </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                
-                                
-                                </div>
-                            </section>
-
-                            
-                            <!-- Sección Vacuna -->
-                            <section class="form-section" aria-labelledby="datos-vacuna-heading">
-                                <h2 id="datos-vacuna-heading"><i class="bi bi-bug"></i> Datos de Desparasitación
-                                </h2>
-
-                                <div class="row g-3">
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="medicamento" name="medicamento"
-                                                placeholder=" " required>
-                                            <label for="medicamento class="required-field">Nombre del Desparasitante</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-
-                                            <select class="form-select" id="tipo" name="tipo" required>
-                                                <option value="" selected disabled>Seleccione tipo de desparasitante</option>
-                                                <option value="Interno/externo">Interno/externo</option>
-                                                <option value="Interno">Interno</option>
-                                                <option value="Externo">Externo</option>
-                                            </select>
-                                            <label for="tipo" class="required-field">Tipo</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="lote" name="lote"
-                                                 placeholder=" " required>
-                                            <label for="lote" class="required-field"> Lote </label>
+                                            <input type="number" class="visually-hidden" id="idMascota" name="idMascota" value="1">
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row g-3 mt-2">
-                                    <div class="col-md-3">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" id="fecha" name="fecha">
-                                            <label for="fecha">Fecha de Vacunación</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-floating">
-                                            <input type="date" class="form-control" name="fechaProxima" id="fechaProxima">
-                                            <label for="fechaProxima">Fecha de Proxima Vacunación</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="observaciones" name="observaciones"
-                                                 placeholder=" " required>
-                                            <label for="observaciones" class="required-field"> Observaciones </label>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </section>
 
 
-
-                            <!-- Botones de acción -->
-                            <div class="d-flex justify-content-between mt-4">
-                                <button type="reset" class="btn btn-outline-secondary px-4">
-                                    <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
-                                </button>
-
-                                <button type="submit" class="btn btn-success px-4">
-                                    <i class="bi bi-save me-2"></i>Guardar Registro
-                                </button>
-                            </div>
-                        </form>
                     </div>
+                    </section>
+
+
+                    <!-- Sección Vacuna -->
+                    <section class="form-section" aria-labelledby="datos-vacuna-heading">
+                        <h2 id="datos-vacuna-heading"><i class="bi bi-bug"></i> Datos de Desparasitación
+                        </h2>
+
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="medicamento" name="medicamento"
+                                        placeholder=" " required>
+                                    <label for="medicamento class=" required-field">Nombre del Desparasitante</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating">
+
+                                    <select class="form-select" id="tipo" name="tipo" required>
+                                        <option value="" selected disabled>Seleccione tipo de desparasitante</option>
+                                        <option value="1">Interno/externo</option>
+                                        <option value="2">Interno</option>
+                                        <option value="3">Externo</option>
+                                    </select>
+                                    <label for="tipo" class="required-field">Tipo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="lote" name="lote" placeholder=" "
+                                        required>
+                                    <label for="lote" class="required-field"> Lote </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="fecha" name="fecha">
+                                    <label for="fecha">Fecha de Vacunación</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" name="fechaProxima" id="fechaProxima">
+                                    <label for="fechaProxima">Fecha de Proxima Vacunación</label>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="observaciones" name="observaciones"
+                                        placeholder=" " required>
+                                    <label for="observaciones" class="required-field"> Observaciones </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+
+
+                    <!-- Botones de acción -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="reset" class="btn btn-outline-secondary px-4">
+                            <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                        </button>
+
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="bi bi-save me-2"></i>Guardar Registro
+                        </button>
+                    </div>
+                    </form>
                 </div>
+            </div>
             </div>
         </main>
         <%- include('../partials/footer')%>
 
             <script src="/mascotaService.js"></script>
-            <script src="/registroController.js"></script>
+            <script type="module" src="/js/desparasitacion.js"></script>
+
             <script>
-                document.querySelectorAll('.password-toggle').forEach(toggle => {
+                document.getElementById('registro-form').addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-                });
+  const data = {
+    medicamento: document.getElementById('medicamento').value,
+    fecha: document.getElementById('fecha').value,
+    fechaProxima: document.getElementById('fechaProxima').value,
+    expediente: document.getElementById('idMascota').value,
+    tipo: document.getElementById('tipo').value,
+    lote: document.getElementById('lote').value,
+    observaciones: document.getElementById('observaciones').value,
+  };
 
-                // Validación de formulario
-                document.getElementById('registro-form').addEventListener('submit', function (e) {
-                    e.preventDefault();
+  try {
+    const res = await fetch('/desparasitacion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
 
+    const result = await res.json();
 
-                    if (this.checkValidity()) {
-                        alert('Formulario enviado correctamente');
-                        // this.submit();
-                    } else {
-                        e.stopPropagation();
-                        this.classList.add('was-validated');
-                    }
-                });
+    if (res.ok) {
+      alert('Registro guardado con éxito');
+      this.reset();
+    } else {
+      alert(result.error || 'Error al guardar');
+    }
+  } catch (error) {
+    console.error('Error en el envío:', error);
+    alert('Fallo la conexión con el servidor');
+  }
+});
 
             </script>
 </body>

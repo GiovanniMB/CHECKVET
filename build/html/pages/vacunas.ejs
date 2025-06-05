@@ -30,7 +30,7 @@
                                     <div class="col-md-12">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="expediente" name="expediente"
-                                                placeholder=" " required readonly>
+                                                placeholder=" "  readonly value="Nombre de la Mascota">
                                             <label for="expediente" class="required-field">Nombre de la Mascota </label>
                                             <input type="number" class="visually-hidden" name="Mascota" id="Mascota"
                                                 value="1">
@@ -119,45 +119,37 @@
         <%- include('../partials/footer')%>
 
             <script src="/mascotaService.js"></script>
-            <script>
-                document.getElementById('registro-form').addEventListener('submit', async function (e) {
-                    e.preventDefault();
+            <script src="/js/vacuna.js"></script>
+          <script>
+  document.getElementById('registro-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-                    const formData = {
-                        expediente: document.getElementById('expediente').value,
-                        vacuna: document.getElementById('vacuna').value,
-                        laboratorio: document.getElementById('laboratorio').value,
-                        lote: document.getElementById('lote').value,
-                        fecha: document.getElementById('fecha').value,
-                        fechaProxima: document.getElementById('fechaProxima').value,
-                        observaciones: document.getElementById('observaciones').value
-                    };
+    // Copiar valor de #Mascota al input #expediente antes de enviar
+    document.getElementById('expediente').value = document.getElementById('Mascota').value;
 
-                    try {
-                        const res = await fetch('/vacuna/registro-vacuna', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(formData)
-                        });
+    const form = new FormData(this);
+    const data = Object.fromEntries(form.entries());
 
-                        const data = await res.json();
+    try {
+      const res = await fetch('/vacuna', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-                        if (res.ok) {
-                            alert(data.message);
-                            this.reset(); // limpia el formulario
-                        } else {
-                            alert(data.error || 'Error al guardar la vacuna');
-                        }
+      const result = await res.json();
+      if (res.ok) {
+        alert(result.message);
+      } else {
+        alert('Error: ' + result.error);
+      }
+    } catch (err) {
+      console.error('Error en el envío:', err);
+      alert('Error al enviar los datos');
+    }
+  });
+</script>
 
-                    } catch (error) {
-                        console.error("Error al enviar vacuna:", error);
-                        alert("Error de conexión con el servidor.");
-                    }
-                });
-
-            </script>
 </body>
 
 </html>

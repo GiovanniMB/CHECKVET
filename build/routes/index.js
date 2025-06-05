@@ -25,6 +25,8 @@ router.get('/consulta',(req,res)=>res.render('formConsulta'));
 
 
 
+
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadPath = path.join(__dirname, '../img'); 

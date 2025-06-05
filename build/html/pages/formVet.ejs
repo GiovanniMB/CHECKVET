@@ -16,9 +16,7 @@
                 <div class="card shadow-sm">
                     <div class="card-header bg-success text-white">
                         <h4 class="card-title text-center mb-0"><i class="bi bi-pencil-square me-2"></i>Registro de
-                            Veterinario <p><strong>Clínica:</strong>
-                                <%= nombreClinica %>
-                            </p>
+                            Veterinario <p><strong>Clínica:</strong> <%= nombreClinica || 'por definir' %></p>
                         </h4>
 
                     </div>
@@ -216,7 +214,6 @@
         </main>
         <%- include('../partials/footer')%>
 
-            <script src="/js/vet.js"></script>
 
 <script>
             document.addEventListener("DOMContentLoaded", async () => {

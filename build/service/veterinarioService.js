@@ -46,5 +46,15 @@ export async function getColonias(idMunicipio) {
 }
 
 
+async function obtenerListadoVeterinarios() {
+    try {
+        const res = await fetch("/veterinarios");
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener listado de veterinarios:", error);
+        return [];
+    }
+}
+
 
 

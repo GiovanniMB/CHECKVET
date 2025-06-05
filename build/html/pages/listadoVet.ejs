@@ -21,6 +21,7 @@
                 <div class="card-body">
                     <hr>
                     <div id="mensajeRegistro"></div> <table class="table table-hover">
+                       
                         <thead class="thead-light">
                             <tr class="text-center">
                                 <th scope="col">Nombre</th>
@@ -29,16 +30,27 @@
                                 <th scope="col">Operaciones</th>
                             </tr>
                         </thead>
-                        <tbody id="mascotas-list">
-                        </tbody>
+                    <tbody>
+            <% veterinarios.forEach(vet => { %>
+            <tr class="text-center">
+                <td><%= vet.nombre %></td>
+                <td><%= vet.apellidoPaterno %></td>
+                <td><%= vet.cedula %></td>
+                <td>
+                <a href="/veterinarios/<%= vet.cedula %>" class="btn btn-sm btn-primary">
+                    Ver
+                </a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </main>
     <%- include('../partials/footer')%>
-    <script src="/mascotaService.js"></script>
-    <script src="/mascotasController.js"></script>
+    
 </body>
 
 </html>

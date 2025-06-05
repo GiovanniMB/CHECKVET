@@ -20,30 +20,75 @@ router.get('/vacunas', (req, res) => res.render('vacunas'));
 router.get('/desparasitaciones', (req, res) => res.render('desparasitacion'));
 router.get('/clinicas/registro', (req, res) => res.render('formClinica'));
 
-router.get('/veterinarios', (req, res) => res.render('listadoVet'));
 router.get('/consulta', (req, res) => res.render('formConsulta'));
 
 // Ruta para mostrar formulario veterinarios con nombre de clínica
 router.get('/veterinarios/registro', async (req, res) => {
-    const { idClinica } = req.query;
+    let { idClinica } = req.query;
+    let nombreClinica = 'por definir';
 
-    if (!idClinica) return res.status(400).send("Falta el ID de la clínica.");
+    // Si no se proporciona, asumimos 0
+    if (!idClinica) {
+        idClinica = 0;
+    }
 
     try {
-        const [rows] = await conexion.promise().query(
-            'SELECT nombre FROM clinica WHERE id = ?', 
-            [idClinica]
-        );
+        if (idClinica != 0) {
+            const [rows] = await conexion.promise().query(
+                'SELECT nombre FROM clinica WHERE id = ?',
+                [idClinica]
+            );
 
-        if (rows.length === 0) return res.status(404).send("Clínica no encontrada.");
+            if (rows.length === 0) return res.status(404).send("Clínica no encontrada.");
 
-        const nombreClinica = rows[0].nombre;
+            nombreClinica = rows[0].nombre;
+        }
 
         res.render('formVet', { idClinica, nombreClinica });
 
     } catch (error) {
         console.error("Error al obtener la clínica:", error);
         res.status(500).send("Error interno del servidor");
+    }
+});
+router.post('/consulta/guardar', async (req, res) => {
+    const {
+        peso,
+        notas,
+        enfermedad,
+        diagnostico,
+        estatus,
+        tratamiento,
+        fechaI,
+        fechaF
+    } = req.body;
+
+    try {
+        // 1. Insertar en consulta
+        const [consultaResult] = await conexion.promise().query(
+            'INSERT INTO consulta (peso, notas) VALUES (?, ?)',
+            [peso, notas]
+        );
+        const idConsulta = consultaResult.insertId;
+
+        // 2. Insertar en enfermedad
+        const [enfermedadResult] = await conexion.promise().query(
+            'INSERT INTO enfermedad (nombre, diagnostico, estatus, idConsulta) VALUES (?, ?, ?, ?)',
+            [enfermedad, diagnostico, estatus, idConsulta]
+        );
+        const idEnfermedad = enfermedadResult.insertId;
+
+        // 3. Insertar en tratamiento
+        await conexion.promise().query(
+            'INSERT INTO tratamiento (descripcion, fechaInicio, fechaFin, idEnfermedad) VALUES (?, ?, ?, ?)',
+            [tratamiento, fechaI, fechaF, idEnfermedad]
+        );
+
+        res.status(200).json({ mensaje: 'Consulta registrada correctamente' });
+
+    } catch (error) {
+        console.error('Error al guardar la consulta:', error);
+        res.status(500).json({ error: 'Error al guardar la consulta' });
     }
 });
 
@@ -71,64 +116,90 @@ router.get("/clinicas", async (req, res) => {
     }
 });
 
+// En tu archivo de rutas, por ejemplo index.js o veterinario.js
+
+router.get('/veterinarios', async (req, res) => {
+    console.log("✅ Entrando a la ruta /veterinarios/listado");
+
+    try {
+        // Usa .promise() para que la consulta sea una promesa válida
+        const [veterinarios] = await conexion.promise().query(`
+            SELECT persona.nombre, persona.apellidoPaterno, veterinario.cedula
+            FROM veterinario
+            INNER JOIN persona ON veterinario.idPersona = persona.id
+        `);
+
+        console.log("👨‍⚕️ Veterinarios encontrados:", veterinarios);
+        // Pasa la variable correcta al render
+        res.render('listadoVet', { veterinarios });
+    } catch (err) {
+        console.error("❌ Error al consultar veterinarios:", err);
+        res.status(500).send("Error al mostrar listado");
+    }
+});
+
+
+
+
+
 // Ruta para guardar veterinarios
 router.post('/veterinarios/guardar', async (req, res) => {
-  const {
-    cedula,
-    nombre,
-    apellidoP,
-    ApellidoM,
-    Telefono,
-    Email,
-    username,
-    password,
-    idClinica,
-  } = req.body;
+    const {
+        cedula,
+        nombre,
+        apellidoP,
+        ApellidoM,
+        Telefono,
+        Email,
+        username,
+        password,
+        idClinica,
+    } = req.body;
 
-  if (!cedula || !nombre || !apellidoP || !ApellidoM || !Telefono || !Email || !username || !password || !idClinica) {
-    return res.status(400).send('Faltan campos obligatorios');
-  }
+    if (!cedula || !nombre || !apellidoP || !ApellidoM || !Telefono || !Email || !username || !password || !idClinica) {
+        return res.status(400).send('Faltan campos obligatorios');
+    }
 
-  try {
-    // 1. Insertar en persona
-    const [resultPersona] = await conexion.promise().query(
-      'INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, telefono) VALUES (?, ?, ?, ?)',
-      [nombre, apellidoP, ApellidoM, Telefono]
-    );
+    try {
+        // 1. Insertar en persona
+        const [resultPersona] = await conexion.promise().query(
+            'INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, telefono) VALUES (?, ?, ?, ?)',
+            [nombre, apellidoP, ApellidoM, Telefono]
+        );
 
-    const idPersona = resultPersona.insertId;
+        const idPersona = resultPersona.insertId;
 
-    // 2. Hashear contraseña
-    const salt = await bcrypt.genSalt(8);
-    const hashedPassword = await bcrypt.hash(password, salt);
+        // 2. Hashear contraseña
+        const salt = await bcrypt.genSalt(8);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-    // 3. Insertar en usuario (asumiendo idperfil 2 para veterinario)
-    const idPerfilVeterinario = 2;
-    const [resultUsuario] = await conexion.promise().query(
-      'INSERT INTO usuario (email, username, password, idperfil) VALUES (?, ?, ?, ?)',
-      [Email, username, hashedPassword, idPerfilVeterinario]
-    );
+        // 3. Insertar en usuario (asumiendo idperfil 2 para veterinario)
+        const idPerfilVeterinario = 2;
+        const [resultUsuario] = await conexion.promise().query(
+            'INSERT INTO usuario (email, username, password, idperfil) VALUES (?, ?, ?, ?)',
+            [Email, username, hashedPassword, idPerfilVeterinario]
+        );
 
-    const idUsuario = resultUsuario.insertId;
+        const idUsuario = resultUsuario.insertId;
 
-    // 4. Insertar en veterinario
-    await conexion.promise().query(
-      'INSERT INTO veterinario (cedula, idPersona, idClinica, idUsuario) VALUES (?, ?, ?, ?)',
-      [cedula, idPersona, idClinica, idUsuario]
-    );
+        // 4. Insertar en veterinario
+        await conexion.promise().query(
+            'INSERT INTO veterinario (cedula, idPersona, idClinica, idUsuario) VALUES (?, ?, ?, ?)',
+            [cedula, idPersona, idClinica, idUsuario]
+        );
 
-    res.redirect('/veterinarios');
+        res.redirect('/veterinarios');
 
-  } catch (error) {
-    console.error("Error guardando veterinario:", error);
-    res.status(500).send("Error interno del servidor");
-  }
+    } catch (error) {
+        console.error("Error guardando veterinario:", error);
+        res.status(500).send("Error interno del servidor");
+    }
 });
 
 // Configuración Multer para subida de imágenes
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        const uploadPath = path.join(__dirname, '../img'); 
+        const uploadPath = path.join(__dirname, '../img');
         cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
@@ -142,7 +213,7 @@ const fileFilter = (req, file, cb) => {
     const filetypes = /jpeg|jpg|png/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    
+
     if (mimetype && extname) {
         return cb(null, true);
     }
@@ -159,8 +230,8 @@ router.post('/subirImagen', upload.single('archivoImagen'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ error: 'No se subió ningún archivo válido' });
     }
-    
-    res.json({ 
+
+    res.json({
         success: true,
         message: 'Imagen subida correctamente',
         filename: req.file.filename,

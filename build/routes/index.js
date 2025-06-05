@@ -67,8 +67,8 @@ router.post('/consulta/guardar', async (req, res) => {
     try {
         // 1. Insertar en consulta
         const [consultaResult] = await conexion.promise().query(
-            'INSERT INTO consulta (peso, notas) VALUES (?, ?)',
-            [peso, notas]
+            'INSERT INTO consulta (peso, observaciones, idCita) VALUES (?, ?, ?)',
+            [peso, notas,1]
         );
         const idConsulta = consultaResult.insertId;
 

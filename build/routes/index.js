@@ -51,6 +51,7 @@ router.get('/veterinarios/registro', async (req, res) => {
         res.status(500).send("Error interno del servidor");
     }
 });
+
 router.post('/consulta/guardar', async (req, res) => {
     const {
         peso,

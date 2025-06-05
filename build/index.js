@@ -7,6 +7,8 @@ import indexRoutes from './routes/index.js';
 import vacunaRoutes from './routes/vacuna.js';
 import desparasitacionRoutes from './routes/desparasitacion.js';
 import clinicaRoutes from './routes/clinicas.js';
+import mascotasRoutes from './routes/mascotas.js';
+
 
 
 
@@ -40,7 +42,8 @@ app.use(express.static(join(__dirname, 'public')));
 
 app.use('/desparasitacion', desparasitacionRoutes);
 app.use('/vacuna', vacunaRoutes);
-app.use('/clinica', clinicaRoutes);
+app.use('/clinicas', clinicaRoutes);
+app.use('/mascotas', mascotasRoutes);
 
 
 app.listen(4000);

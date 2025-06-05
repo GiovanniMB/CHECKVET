@@ -1,12 +1,12 @@
-async function getEstados() 
-{    
-    const res = await fetch('http://localhost:3000/formMAscota/estados');
+async function getEstados() {    
+    const res = await fetch('/formMAscota/estados');
     const resJson = await res.json();
     return resJson;
 }
+
 async function getMunicipios(estadoId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/municipios/${estadoId}`);
+        const res = await fetch(`/formMAscota/municipios/${estadoId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -14,9 +14,10 @@ async function getMunicipios(estadoId) {
         return [];
     }
 }
+
 async function getColonias(municipioId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/colonias/${municipioId}`);
+        const res = await fetch(`/formMAscota/colonias/${municipioId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -24,9 +25,10 @@ async function getColonias(municipioId) {
         return [];
     }
 }
+
 async function getEspecies() {
     try {
-        const res = await fetch('http://localhost:3000/formMAscota/especie');
+        const res = await fetch('/formMAscota/especie');
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -37,7 +39,7 @@ async function getEspecies() {
 
 async function getRazas(especieId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/raza/${especieId}`);
+        const res = await fetch(`/formMAscota/raza/${especieId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -45,9 +47,10 @@ async function getRazas(especieId) {
         return [];
     }
 }
+
 async function verificarExistenciaCliente(curp) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/cliente/${curp}`);
+        const res = await fetch(`/formMAscota/cliente/${curp}`);
         return await res.json();
     } catch (error) {
         console.error("Error al verificar cliente:", error);
@@ -57,11 +60,10 @@ async function verificarExistenciaCliente(curp) {
 
 async function obtenerListadoMascotas() {
     try {
-        const res = await fetch("http://localhost:3000/mascotas/listado");
+        const res = await fetch("/mascotas/listado");
         return await res.json();
     } catch (error) {
         console.error("Error al obtener listado de mascotas:", error);
         return [];
     }
 }
-

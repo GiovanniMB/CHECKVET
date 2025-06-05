@@ -1,3 +1,38 @@
+import conexion from '../conexion.js'; // Ajusta si usas otro archivo
+
+export const registrarClinica = async (req, res) => {
+    const {
+        nombre,
+        estado,
+        municipio,
+        colonia,
+        calle,
+        numero,
+        numeroInt,
+        cp,
+        referencias
+    } = req.body;
+
+    try {
+        const query = `
+            INSERT INTO clinica (nombre, estado, municipio, colonia, calle, numero, numeroInt, cp, referencias)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        const values = [nombre, estado, municipio, colonia, calle, numero, numeroInt, cp, referencias];
+
+        await conexion.query(query, values);
+
+        res.status(200).json({ message: 'Clínica registrada con éxito' });
+    } catch (error) {
+        console.error('Error al registrar clínica:', error);
+        res.status(500).json({ message: 'Error al guardar los datos' });
+    }
+};
+
+
+
+
+/*
 document.addEventListener("DOMContentLoaded", async () => {
     const tbody = document.getElementById("clinicas-list");
 
@@ -35,4 +70,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         localStorage.removeItem("registroExitoso");
     }
-});
+});*/

@@ -17,6 +17,7 @@ router.get('/vacunas',(req,res)=>res.render('vacunas'));
 router.get('/desparasitaciones',(req,res)=>res.render('desparasitacion'));
 router.get('/clinicas/registro',(req,res)=>res.render('formClinica'));
 
+
 router.get('/veterinarios/registro', async (req, res) => {
     const { idClinica } = req.query;
 

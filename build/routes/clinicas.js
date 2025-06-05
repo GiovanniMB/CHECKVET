@@ -1,7 +1,11 @@
 import express from 'express';
 import conexion from '../db.js';
+import { registrarClinica } from '../controller/clinicaController.js';
 
 const router = express.Router();
+
+
+router.post('/registrar', registrarClinica);
 
 router.get("/", async (req, res) => {
     try {
@@ -24,6 +28,33 @@ router.get("/", async (req, res) => {
         res.status(500).send("Error del servidor");
     }
 });
+
+// Obtener estados
+router.get("/estados", async (req, res) => {
+    const [rows] = await conexion.promise().query("SELECT id, nombre FROM estado");
+    res.json(rows);
+});
+
+// Obtener municipios por estado
+router.get("/municipios/:idEstado", async (req, res) => {
+    const { idEstado } = req.params;
+    const [rows] = await conexion.promise().query(
+        "SELECT id, nombre FROM municipio WHERE idEstado = ?",
+        [idEstado]
+    );
+    res.json(rows);
+});
+
+// Obtener colonias por municipio
+router.get("/colonias/:idMunicipio", async (req, res) => {
+    const { idMunicipio } = req.params;
+    const [rows] = await conexion.promise().query(
+        "SELECT id, nombre FROM colonia WHERE idMunicipio = ?",
+        [idMunicipio]
+    );
+    res.json(rows);
+});
+
 
 export default router;
 

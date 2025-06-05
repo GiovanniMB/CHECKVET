@@ -137,40 +137,45 @@
 
             <script src="/mascotaService.js"></script>
             <script src="/registroController.js"></script>
-            <script>
-                document.querySelectorAll('.password-toggle').forEach(toggle => {
-                    toggle.addEventListener('click', function () {
-                        const passwordInput = this.previousElementSibling;
-                        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                        passwordInput.setAttribute('type', type);
-                        this.querySelector('i').classList.toggle('bi-eye');
-                        this.querySelector('i').classList.toggle('bi-eye-slash');
-                    });
-                });
-
-                // Validación de formulario
-                document.getElementById('registro-form').addEventListener('submit', function (e) {
-                    e.preventDefault();
-
-                    // Validar que las contraseñas coincidan
-                    const password = document.getElementById('password').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-
-                    if (password !== confirmPassword) {
-                        alert('Las contraseñas no coinciden');
-                        return;
-                    }
-
-                    if (this.checkValidity()) {
-                        alert('Formulario enviado correctamente');
-                        // this.submit();
-                    } else {
-                        e.stopPropagation();
-                        this.classList.add('was-validated');
-                    }
-                });
-
-            </script>
+            
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const estadoSelect = document.getElementById("estado");
+    const municipioSelect = document.getElementById("Municipio");
+    const coloniaSelect = document.getElementById("Colonia");
+
+    // Cargar estados al inicio
+    const estados = await fetch("/clinicas/estados").then(r => r.json());
+    estados.forEach(e => {
+        estadoSelect.innerHTML += `<option value="${e.id}">${e.nombre}</option>`;
+    });
+
+    // Cargar municipios cuando cambia estado
+    estadoSelect.addEventListener("change", async () => {
+        const idEstado = estadoSelect.value;
+        municipioSelect.innerHTML = `<option selected disabled>Seleccione un municipio</option>`;
+        coloniaSelect.innerHTML = `<option selected disabled>Seleccione una colonia</option>`;
+        if (!idEstado) return;
+
+        const municipios = await fetch(`/clinicas/municipios/${idEstado}`).then(r => r.json());
+        municipios.forEach(m => {
+            municipioSelect.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
+        });
+    });
+
+    // Cargar colonias cuando cambia municipio
+    municipioSelect.addEventListener("change", async () => {
+        const idMunicipio = municipioSelect.value;
+        coloniaSelect.innerHTML = `<option selected disabled>Seleccione una colonia</option>`;
+        if (!idMunicipio) return;
+
+        const colonias = await fetch(`/clinicas/colonias/${idMunicipio}`).then(r => r.json());
+        colonias.forEach(c => {
+            coloniaSelect.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+        });
+    });
+});
+</script>
 
 </html>

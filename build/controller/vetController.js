@@ -1,4 +1,7 @@
 // controllers/clinicaController.js
+
+import { getEstados, getMunicipios, getColonias } from './veterinarioService.js';
+
 import conexion from '../db.js';
 
 export const registrarClinica = async (req, res) => {

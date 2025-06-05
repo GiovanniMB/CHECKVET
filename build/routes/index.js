@@ -1,23 +1,29 @@
-import { Router} from "express";
+import { Router } from "express";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
-import conexion from '../db.js';
+import bcrypt from 'bcryptjs';
+import conexion from '../db.js';  // Ajusta la ruta si es necesario
 
 
 const router = Router();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-router.get('/',(req,res)=>res.render('index'));
-router.get('/formMascota',(req,res)=>res.render('formMascota'));
-router.get('/mascotas',(req,res)=>res.render('mascotas'));
-router.get('/mascota',(req,res)=>res.render('mascota'));
-router.get('/vacunas',(req,res)=>res.render('vacunas'));
-router.get('/desparasitaciones',(req,res)=>res.render('desparasitacion'));
-router.get('/clinicas/registro',(req,res)=>res.render('formClinica'));
+// Rutas de renderizado simples
+router.get('/', (req, res) => res.render('index'));
+router.get('/formMascota', (req, res) => res.render('formMascota'));
+router.get('/mascotas', (req, res) => res.render('mascotas'));
+router.get('/mascota', (req, res) => res.render('mascota'));
+router.get('/vacunas', (req, res) => res.render('vacunas'));
+router.get('/desparasitaciones', (req, res) => res.render('desparasitacion'));
+router.get('/clinicas/registro', (req, res) => res.render('formClinica'));
 
+router.get('/veterinarios', (req, res) => res.render('listadoVet'));
+router.get('/consulta', (req, res) => res.render('formConsulta'));
 
+// Ruta para mostrar formulario veterinarios con nombre de clínica
 router.get('/veterinarios/registro', async (req, res) => {
     const { idClinica } = req.query;
 
@@ -41,9 +47,7 @@ router.get('/veterinarios/registro', async (req, res) => {
     }
 });
 
-router.get('/veterinarios',(req,res)=>res.render('listadoVet'));
-router.get('/consulta',(req,res)=>res.render('formConsulta'));
-
+// Ruta para obtener listado de clínicas con datos completos
 router.get("/clinicas", async (req, res) => {
     try {
         const [rows] = await conexion.promise().query(`
@@ -59,14 +63,15 @@ router.get("/clinicas", async (req, res) => {
             JOIN estado est ON mun.idEstado = est.id
         `);
 
-        res.render("listadoClinicas", { clinicas: rows }); // 👈 ¡AQUÍ está lo importante!
+        res.render("listadoClinicas", { clinicas: rows });
+
     } catch (error) {
-    console.error("Error al obtener clínicas:", error); // ← ¡Esto es lo que debes ver en la consola!
-    res.status(500).send("Error interno del servidor");
-}
+        console.error("Error al obtener clínicas:", error);
+        res.status(500).send("Error interno del servidor");
+    }
 });
 
-
+// Ruta para guardar veterinarios
 router.post('/veterinarios/guardar', async (req, res) => {
   const {
     cedula,
@@ -78,47 +83,41 @@ router.post('/veterinarios/guardar', async (req, res) => {
     username,
     password,
     idClinica,
-    // Aquí también debes recibir los campos de dirección si vas a guardarlos, sino quítalos
   } = req.body;
 
-  // Validación básica
   if (!cedula || !nombre || !apellidoP || !ApellidoM || !Telefono || !Email || !username || !password || !idClinica) {
     return res.status(400).send('Faltan campos obligatorios');
   }
 
   try {
-    // 1. Guardar en tabla persona
+    // 1. Insertar en persona
     const [resultPersona] = await conexion.promise().query(
-      `INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, telefono) VALUES (?, ?, ?, ?)`,
+      'INSERT INTO persona (nombre, apellidoPaterno, apellidoMaterno, telefono) VALUES (?, ?, ?, ?)',
       [nombre, apellidoP, ApellidoM, Telefono]
     );
 
     const idPersona = resultPersona.insertId;
 
-    // 2. Guardar en tabla usuario
-    // Nota: Aquí debes hashear la contraseña antes de guardar para seguridad
-    // Usa bcrypt o similar (ejemplo con bcryptjs)
-    
+    // 2. Hashear contraseña
     const salt = await bcrypt.genSalt(8);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // idperfil: Asumo que 2 es veterinario (ajusta según tu lógica)
+    // 3. Insertar en usuario (asumiendo idperfil 2 para veterinario)
     const idPerfilVeterinario = 2;
-
     const [resultUsuario] = await conexion.promise().query(
-      `INSERT INTO usuario (email, username, password, idperfil) VALUES (?, ?, ?, ?)`,
+      'INSERT INTO usuario (email, username, password, idperfil) VALUES (?, ?, ?, ?)',
       [Email, username, hashedPassword, idPerfilVeterinario]
     );
 
     const idUsuario = resultUsuario.insertId;
 
-    // 3. Guardar en tabla veterinario
+    // 4. Insertar en veterinario
     await conexion.promise().query(
-      `INSERT INTO veterinario (cedula, idPersona, idClinica, idUsuario) VALUES (?, ?, ?, ?)`,
+      'INSERT INTO veterinario (cedula, idPersona, idClinica, idUsuario) VALUES (?, ?, ?, ?)',
       [cedula, idPersona, idClinica, idUsuario]
     );
 
-    res.redirect('/veterinarios'); // o donde quieras redirigir después de guardar
+    res.redirect('/veterinarios');
 
   } catch (error) {
     console.error("Error guardando veterinario:", error);
@@ -126,10 +125,7 @@ router.post('/veterinarios/guardar', async (req, res) => {
   }
 });
 
-
-
-
-
+// Configuración Multer para subida de imágenes
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const uploadPath = path.join(__dirname, '../img'); 
@@ -142,7 +138,6 @@ const storage = multer.diskStorage({
     }
 });
 
-
 const fileFilter = (req, file, cb) => {
     const filetypes = /jpeg|jpg|png/;
     const mimetype = filetypes.test(file.mimetype);
@@ -154,15 +149,11 @@ const fileFilter = (req, file, cb) => {
     cb(new Error('Error: Solo se permiten imágenes (JPEG, JPG, PNG)'));
 };
 
-
 const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
-    limits: {
-        fileSize: 2 * 1024 * 1024 
-    }
+    limits: { fileSize: 2 * 1024 * 1024 } // 2MB
 });
-
 
 router.post('/subirImagen', upload.single('archivoImagen'), (req, res) => {
     if (!req.file) {
@@ -176,8 +167,5 @@ router.post('/subirImagen', upload.single('archivoImagen'), (req, res) => {
         path: `/img/${req.file.filename}`
     });
 });
-
-
-
 
 export default router;

@@ -1,12 +1,12 @@
 async function getEstados() {    
-    const res = await fetch('/formMAscota/estados');
+    const res = await fetch('/formMascota/estados');
     const resJson = await res.json();
     return resJson;
 }
 
 async function getMunicipios(estadoId) {
     try {
-        const res = await fetch(`/formMAscota/municipios/${estadoId}`);
+        const res = await fetch(`/formMascota/municipios/${estadoId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -17,7 +17,7 @@ async function getMunicipios(estadoId) {
 
 async function getColonias(municipioId) {
     try {
-        const res = await fetch(`/formMAscota/colonias/${municipioId}`);
+        const res = await fetch(`/formMascota/colonias/${municipioId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -28,7 +28,7 @@ async function getColonias(municipioId) {
 
 async function getEspecies() {
     try {
-        const res = await fetch('/formMAscota/especie');
+        const res = await fetch('/formMascota/especie');
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -39,7 +39,7 @@ async function getEspecies() {
 
 async function getRazas(especieId) {
     try {
-        const res = await fetch(`/formMAscota/raza/${especieId}`);
+        const res = await fetch(`/formMascota/raza/${especieId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -50,7 +50,7 @@ async function getRazas(especieId) {
 
 async function verificarExistenciaCliente(curp) {
     try {
-        const res = await fetch(`/formMAscota/cliente/${curp}`);
+        const res = await fetch(`/formMascota/cliente/${curp}`);
         return await res.json();
     } catch (error) {
         console.error("Error al verificar cliente:", error);

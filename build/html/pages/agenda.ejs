@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/head')%>
+    <title>CHECKVET - Citas del Veterinario</title>
+</head>
+
+<body>
+    <%- include('../partials/header')%>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0"><i class="bi bi-calendar-check"></i> Citas</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th><i class="bi bi-clipboard2"></i> Motivo</th>
+                                            <th><i class="bi bi-calendar-event"></i> Fecha</th>
+                                            <th><i class="bi bi-exclamation-circle"></i> Situación</th>
+                                            <th><i class="bi bi-gitlab"></i> Mascota</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="citas-list">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="btn btn-outline-success mt-3">
+                                <i class="bi bi-plus-circle"></i> Agregar nueva cita
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer')%>
+</body>
+
+</html>

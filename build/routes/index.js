@@ -2,16 +2,39 @@ import { Router} from "express";
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
+import {authenticateToken } from '../service/authService.js'
 
 
 const router = Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-router.get('/',(req,res)=>res.render('index'));
-router.get('/formMascota',(req,res)=>res.render('formMascota'));
-router.get('/mascotas',(req,res)=>res.render('mascotas'));
-router.get('/mascota',(req,res)=>res.render('mascota'));
+router.get('/', authenticateToken,(req,res)=>res.render('index'));
+router.get('/formMascota',authenticateToken,(req,res)=>res.render('formMascota'));
+router.get('/mascotas',authenticateToken,(req,res)=>res.render('mascotas'));
+router.get('/mascota/:id',authenticateToken, async (req, res) => {
+    try {
+        const mascotaId = req.params.id;
+        const idPerfil = req.user.idperfil; 
+        res.render('mascota', { mascotaId ,idPerfil });
+    } catch (error) {
+        res.status(500).json({ error: "Error al cargar la vista de mascota." });
+    }
+});
+router.get('/agenda',(req,res)=>res.render('agenda'));
+router.get('/login',(req,res)=>res.render('login'));
+router.get("/logout", (req, res) => {
+    res.clearCookie("myTokenName", { path: "/" });
+    res.json({ message: "Sesión cerrada exitosamente" });
+});
+router.get("/misMascotas", authenticateToken, (req, res) => {
+    const curp = req.user.curp; 
+    res.render("mascotasduenio", { curp });
+});
+
+
+
+
 
 
 

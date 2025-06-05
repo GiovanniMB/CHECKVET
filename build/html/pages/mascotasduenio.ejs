@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHECKVET - Mis Mascotas</title>
+    <%- include('../partials/head')%>
+</head>
+
+<body data-curp="<%= curp %>">
+    <%- include('../partials/header')%>
+    <main>
+        <div class="container">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4><strong>Mis Mascotas</strong></h4>
+                </div>
+
+                <div class="card-body">
+                    <hr>
+                    <div id="mensajeRegistro"></div> 
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Especie</th>
+                                <th scope="col">Raza</th>
+                                <th scope="col">Edad</th>
+                                <th scope="col">Peso</th>
+                                <th scope="col">Sexo</th>
+                                <th scope="col">Expediente</th>
+                            </tr>
+                        </thead>
+                        <tbody id="mis-mascotas-list">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <%- include('../partials/footer')%>
+    <script src="/misMascotasController.js"></script>
+</body>
+
+</html>

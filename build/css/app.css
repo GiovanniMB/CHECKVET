@@ -54,3 +54,34 @@
             content: " *";
             color: #dc3545;
         }
+        .pet-profile-header {
+            background-color: #28a745;
+            color: white;
+            border-radius: 10px;
+        }
+        .pet-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .info-card {
+            border-left: 4px solid #28a745;
+            transition: all 0.3s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .table-responsive {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .status-badge {
+            font-size: 0.8rem;
+        }
+        .last-treatment {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }

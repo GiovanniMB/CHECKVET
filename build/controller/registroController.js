@@ -180,7 +180,7 @@ document.getElementById("registro-form").addEventListener("submit", async functi
     }
 
     const datos = Object.fromEntries(formData.entries());
-
+    console.log(datos)
     try {
         const res = await fetch("http://localhost:3000/formMAscota/registro", {
             method: "POST",

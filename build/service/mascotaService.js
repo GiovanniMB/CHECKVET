@@ -65,3 +65,70 @@ async function obtenerListadoMascotas() {
     }
 }
 
+ async function obtenerDetalleMascota(id) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/detalle/${id}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener detalles de la mascota:", error);
+        return null;
+    }
+}
+
+async function obtenerHistorialMascota(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/ultimaCons/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener el historial médico:", error);
+        return null;
+    }
+}
+
+async function obtenerEnfermedad(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/enfermedad/cronica/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener el historial médico:", error);
+        return null;
+    }
+}
+
+async function obtenerUltimaVacuna(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/vacuna/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener la última vacuna:", error);
+        return null;
+    }
+}
+
+async function obtenerUltimaDesparasitacion(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/desparasitacion/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener la última desparasitación:", error);
+        return null;
+    }
+}
+async function obtenerHistorialVacunas(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/vacunas/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener el historial de vacunas:", error);
+        return null;
+    }
+}
+async function obtenerHistorialDesparasitaciones(idMascota) {
+    try {
+        const res = await fetch(`http://localhost:3000/mascotas/desparasitaciones/${idMascota}`);
+        return await res.json();
+    } catch (error) {
+        console.error("Error al obtener el historial de desparasitaciones:", error);
+        return null;
+    }
+}

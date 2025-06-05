@@ -16,23 +16,30 @@
                 <div class="card shadow-sm">
                     <div class="card-header bg-success text-white">
                         <h4 class="card-title text-center mb-0"><i class="bi bi-pencil-square me-2"></i>Registro de
-                            Veterinario</h4>
+                            Veterinario <p><strong>Clínica:</strong>
+                                <%= nombreClinica %>
+                            </p>
+                        </h4>
+
                     </div>
 
                     <div class="card-body">
-                        <form id="registro-form" novalidate>
-                            
+                        <form id="registro-form" method="POST" action="/veterinarios/guardar" novalidate>
+
+                            <input type="hidden" name="idClinica" value="<%= idClinica || '' %>">
+
                             <!-- Sección Veterinario -->
                             <section class="form-section" aria-labelledby="datos-vet-heading">
-                                <h2 id="datos-vet-heading"><i class="bi bi-person-vcard me-2"></i>Datos del Veterinario</h2>
+                                <h2 id="datos-vet-heading"><i class="bi bi-person-vcard me-2"></i>Datos del Veterinario
+                                </h2>
 
                                 <div class="row g-3 mb-3">
                                     <div class="col-md-4">
                                         <div class="form-floating">
                                             <input type="text" class="form-control" id="cedula" name="cedula"
-                                                placeholder=" "  required>
+                                                placeholder=" " required>
                                             <label for="cedula" class="required-field">Cedula Profesional</label>
-                                        
+
                                         </div>
                                     </div>
                                     <div class="col-md-4">

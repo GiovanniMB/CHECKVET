@@ -30,16 +30,35 @@
                                 <th scope="col">Operaciones</th>
                             </tr>
                         </thead>
-                        <tbody id="mascotas-list">
-                        </tbody>
+                        <tbody>
+  <% if (clinicas && clinicas.length > 0) { %>
+    <% clinicas.forEach(clinica => { %>
+      <tr class="text-center">
+        <td><%= clinica.nombreClinica %></td>
+        <td><%= clinica.estado %></td>
+        <td><%= clinica.municipio %></td>
+        <td><%= clinica.colonia %></td>
+        <td class="text-center">
+        <a href="/veterinarios/registro?idClinica=<%= clinica.id %>" class="btn btn-sm btn-success">
+    <i class="bi bi-person-fill-add"></i>
+  </a>  
+        </td>
+      </tr>
+    <% }) %>
+  <% } else { %>
+    <tr><td colspan="5" class="text-center">No hay clínicas registradas</td></tr>
+  <% } %>
+</tbody>
                     </table>
                 </div>
             </div>
         </div>
     </main>
     <%- include('../partials/footer')%>
-    <script src="/mascotaService.js"></script>
-    <script src="/mascotasController.js"></script>
+    <script src="/clinicasService.js"></script>
+    <script src="/clinicasController.js"></script>
+
+
 </body>
 
 </html>

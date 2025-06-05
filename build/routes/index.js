@@ -20,7 +20,39 @@ router.get('/vacunas', (req, res) => res.render('vacunas'));
 router.get('/desparasitaciones', (req, res) => res.render('desparasitacion'));
 router.get('/clinicas/registro', (req, res) => res.render('formClinica'));
 
-router.get('/consulta', (req, res) => res.render('formConsulta'));
+router.get('/consulta/:idCita', (req, res) => {
+  const { idCita } = req.params;
+
+  // Aquí puedes pasar ese ID a la vista
+  res.render('formConsulta', { idCita });
+});
+
+// Mostrar listado de citas con datos de mascota
+router.get('/citas', async (req, res) => {
+    try {
+        const [rows] = await conexion.promise().query(`
+            SELECT 
+                cita.id AS idCita,
+                cita.motivo,
+                cita.fecha,
+                expediente.id AS idExpediente,
+                mascota.nombre AS nombreMascota,
+                mascota.raza,
+                mascota.sexo,
+                mascota.peso
+            FROM cita
+            INNER JOIN expediente ON cita.idExpediente = expediente.id
+            INNER JOIN mascota ON expediente.idMascota = mascota.id
+        `);
+
+        res.render('listadoCitas', { citas: rows });
+
+    } catch (error) {
+        console.error('Error al obtener citas:', error);
+        res.status(500).send('Error al obtener citas');
+    }
+});
+
 
 // Ruta para mostrar formulario veterinarios con nombre de clínica
 router.get('/veterinarios/registro', async (req, res) => {
@@ -54,6 +86,7 @@ router.get('/veterinarios/registro', async (req, res) => {
 
 router.post('/consulta/guardar', async (req, res) => {
     const {
+        idCita,
         peso,
         notas,
         enfermedad,
@@ -68,7 +101,7 @@ router.post('/consulta/guardar', async (req, res) => {
         // 1. Insertar en consulta
         const [consultaResult] = await conexion.promise().query(
             'INSERT INTO consulta (peso, observaciones, idCita) VALUES (?, ?, ?)',
-            [peso, notas,1]
+            [peso, notas, idCita]
         );
         const idConsulta = consultaResult.insertId;
 

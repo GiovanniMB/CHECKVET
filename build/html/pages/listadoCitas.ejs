@@ -35,7 +35,7 @@
                                 <tr class="text-center">
                                     <td><%= cita.nombreMascota %></td>
                                     <td><%= cita.motivo %></td>
-                                    <td><%= cita.fecha.toISOString().split('T')[0] %></td>
+                                    <td><%= cita.fecha ? new Date(cita.fecha).toISOString().split('T')[0] : 'Sin fecha' %></td>
                                     <td>
                                         <a href="/consulta/<%= cita.idCita %>" class="btn btn-sm btn-primary">
                                             Registrar Consulta

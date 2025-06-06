@@ -20,6 +20,50 @@ router.get('/vacunas', (req, res) => res.render('vacunas'));
 router.get('/desparasitaciones', (req, res) => res.render('desparasitacion'));
 router.get('/clinicas/registro', (req, res) => res.render('formClinica'));
 
+router.get('/cita', async (req, res) => {
+  try {
+    // Obtener todas las mascotas
+    const [mascotas] = await conexion.promise().query('SELECT id, nombre FROM mascota');
+
+    // Renderizar la vista y pasar las mascotas
+    res.render('formCita', { mascotas });
+
+  } catch (error) {
+    console.error('Error al obtener las mascotas:', error);
+    res.status(500).send('Error al cargar el formulario de cita');
+  }
+});
+
+router.post('/cita/guardar', async (req, res) => {
+    try {
+        const { motivo, fecha, situation, mascota } = req.body;
+        const idVet = 12345678; // o usa el de sesión
+
+        // 1. Buscar el expediente asociado a la mascota
+        const [expedienteRows] = await conexion.promise().query(
+            'SELECT id FROM expediente WHERE idMascota = ? ORDER BY fecha_creacion DESC LIMIT 1',
+            [mascota]
+        );
+
+        if (expedienteRows.length === 0) {
+            return res.status(404).json({ error: 'No se encontró expediente para esta mascota.' });
+        }
+
+        const idExpediente = expedienteRows[0].id;
+
+        // 2. Insertar la cita
+        await conexion.promise().query(
+            'INSERT INTO cita (idVeterinario, motivo, fecha, situation, idExpediente) VALUES (?, ?, ?, ?, ?)',
+            [idVet, motivo, fecha, situation, idExpediente]
+        );
+
+        res.json({ success: true, message: 'Cita registrada con éxito.' });
+    } catch (error) {
+        console.error('Error al guardar la cita:', error);
+        res.status(500).json({ error: 'Error interno al guardar la cita.' });
+    }
+});
+
 router.get('/consulta/:idCita', (req, res) => {
   const { idCita } = req.params;
 
@@ -98,25 +142,29 @@ router.post('/consulta/guardar', async (req, res) => {
     } = req.body;
 
     try {
-        // 1. Insertar en consulta
+        // 1. Insertar en consulta (obligatorio)
         const [consultaResult] = await conexion.promise().query(
             'INSERT INTO consulta (peso, observaciones, idCita) VALUES (?, ?, ?)',
             [peso, notas, idCita]
         );
         const idConsulta = consultaResult.insertId;
 
-        // 2. Insertar en enfermedad
-        const [enfermedadResult] = await conexion.promise().query(
-            'INSERT INTO enfermedad (nombre, diagnostico, estatus, idConsulta) VALUES (?, ?, ?, ?)',
-            [enfermedad, diagnostico, estatus, idConsulta]
-        );
-        const idEnfermedad = enfermedadResult.insertId;
+        // 2. Insertar en enfermedad SOLO si al menos el nombre de enfermedad está definido y no vacío
+        if (enfermedad && enfermedad.trim() !== '') {
+            const [enfermedadResult] = await conexion.promise().query(
+                'INSERT INTO enfermedad (nombre, diagnostico, estatus, idConsulta) VALUES (?, ?, ?, ?)',
+                [enfermedad, diagnostico || null, estatus || null, idConsulta]
+            );
+            const idEnfermedad = enfermedadResult.insertId;
 
-        // 3. Insertar en tratamiento
-        await conexion.promise().query(
-            'INSERT INTO tratamiento (descripcion, fechaInicio, fechaFin, idEnfermedad) VALUES (?, ?, ?, ?)',
-            [tratamiento, fechaI, fechaF, idEnfermedad]
-        );
+            // 3. Insertar en tratamiento SOLO si la descripción del tratamiento no está vacía
+            if (tratamiento && tratamiento.trim() !== '') {
+                await conexion.promise().query(
+                    'INSERT INTO tratamiento (descripcion, fechaInicio, fechaFin, idEnfermedad) VALUES (?, ?, ?, ?)',
+                    [tratamiento, fechaI || null, fechaF || null, idEnfermedad]
+                );
+            }
+        }
 
         res.status(200).json({ mensaje: 'Consulta registrada correctamente' });
 
@@ -125,6 +173,7 @@ router.post('/consulta/guardar', async (req, res) => {
         res.status(500).json({ error: 'Error al guardar la consulta' });
     }
 });
+
 
 // Ruta para obtener listado de clínicas con datos completos
 router.get("/clinicas", async (req, res) => {
@@ -173,7 +222,42 @@ router.get('/veterinarios', async (req, res) => {
 });
 
 
+router.post('/clinicas/guardar', async (req, res) => {
+  const {
+    nombre, idEmpresa,
+    estado, Municipio, Colonia, Calle, numero, numeroInt, cp, referencias,
+    username, email, password
+  } = req.body;
 
+  try {
+    // 1) Crear usuario
+    const [resultUser] = await conexion.promise().query(
+      `INSERT INTO usuario (username, email, password, idperfil) VALUES (?, ?, ?, ?)`,
+      [username, email, password, 3]
+    );
+    const idUsuario = resultUser.insertId;
+
+    // 2) Crear dirección y guardar resultado para obtener insertId
+    const [resultDireccion] = await conexion.promise().query(
+      `INSERT INTO direccion (calle, numeroExterior, idColonia, numeroInterior, codigoPostal, referencias)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+      [Calle, numero, Colonia, numeroInt || null, cp, referencias || null]
+    );
+    const idDireccion = resultDireccion.insertId;
+
+    // 3) Crear clínica
+    const [resultClinica] = await conexion.promise().query(
+      `INSERT INTO clinica (nombre, idEmpresa, idDireccion, idUsuario) VALUES (?, ?, ?, ?)`,
+      [nombre, idEmpresa, idDireccion, idUsuario]
+    );
+
+    res.json({ message: 'Clínica registrada correctamente' });
+
+  } catch (error) {
+    console.error("❌ Error al registrar clínica:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // Ruta para guardar veterinarios

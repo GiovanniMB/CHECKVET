@@ -65,29 +65,39 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     // Manejo del formulario
-    document.getElementById("registro-form").addEventListener("submit", async function (event) {
-        event.preventDefault();
+   document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("registro-form");
 
-        const formData = Object.fromEntries(new FormData(this).entries());
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const jsonData = Object.fromEntries(data.entries());
 
         try {
-            const res = await fetch("/clinicas/formClinica/registro", {
+            const response = await fetch("/clinicas/guardar", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(formData),
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jsonData)
             });
 
-            const data = await res.json();
+            const result = await response.json();
 
-            if (res.ok) {
-                window.location.href = "/clinicas";
-                localStorage.setItem("registroClinicaExitoso", "true");
+            if (response.ok) {
+                alert(result.message);
+                form.reset();
             } else {
-                mostrarError("Error en el registro: " + (data.error || data.message));
+                alert(result.error || "Error al registrar la clínica");
             }
+
         } catch (err) {
-            console.error("Error al enviar datos:", err);
-            mostrarError("Ocurrió un error al registrar la clínica.");
+            console.error("❌ Error de red o servidor:", err);
+            alert("No se pudo registrar la clínica");
         }
     });
+});
+
+
 });

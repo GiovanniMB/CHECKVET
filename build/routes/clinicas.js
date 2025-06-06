@@ -1,6 +1,5 @@
 import express from 'express';
 import conexion from '../db.js';  // Ajusta la ruta según tu estructura
-import { registrarClinica } from '../controller/clinicaController.js';
 
 const router = express.Router();
 
@@ -54,7 +53,6 @@ router.get('/colonias/:idMunicipio', async (req, res) => {
 });
 
 // Ruta POST para registrar clínica
-router.post('/formClinica/registro', registrarClinica);
 
 
 export default router;

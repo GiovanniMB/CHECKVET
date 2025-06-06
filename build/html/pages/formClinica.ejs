@@ -116,6 +116,46 @@
                                     </div>
                                 </div>
                             </section>
+                             <!-- Sección Usuario -->
+                            <section class="form-section" aria-labelledby="datos-usuario-heading">
+                                <h2 id="datos-usuario-heading"><i class="bi bi-shield-lock me-2"></i>Datos de Usuario
+                                </h2>
+
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder=" " required>
+                                            <label for="username" class="required-field">Nombre de Usuario</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                placeholder=" " required>
+                                            <label for="email" class="required-field">Correo Electrónico</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder=" " required minlength="8">
+                                            <label for="password" class="required-field">Contraseña</label>
+                                            <small class="form-text text-muted">Mínimo 8 caracteres</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="confirmPassword"
+                                                name="confirmPassword" placeholder=" " required>
+                                            <label for="confirmPassword" class="required-field">Confirmar
+                                                Contraseña</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
 
 
                             <!-- Botones de acción -->
@@ -190,6 +230,41 @@ document.addEventListener("DOMContentLoaded", async () => {
         coloniaSelect.disabled = false;
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("registro-form");
+
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(form);
+        const jsonData = Object.fromEntries(data.entries());
+
+        try {
+            const response = await fetch("/clinicas/guardar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message);
+                form.reset();
+            } else {
+                alert(result.error || "Error al registrar la clínica");
+            }
+
+        } catch (err) {
+            console.error("❌ Error de red o servidor:", err);
+            alert("No se pudo registrar la clínica");
+        }
+    });
+});
+
 </script>
 
 

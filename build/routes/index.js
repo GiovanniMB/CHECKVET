@@ -14,11 +14,11 @@ const router = Router();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-router.get('/', authenticateToken,(req,res)=>res.render('index'));
-router.get('/formMascota',authenticateToken,(req,res)=>res.render('formMascota'));
+router.get('/', (req,res)=>res.render('index'));
+router.get('/formMascota',(req,res)=>res.render('formMascota'));
 router.get('/formEmpresa',(req,res)=>res.render('formEmpresa'));
-router.get('/mascotas',authenticateToken,(req,res)=>res.render('mascotas'));
-router.get('/mascota/:id', authenticateToken,async (req, res) => {
+router.get('/mascotas',(req,res)=>res.render('mascotas'));
+router.get('/mascota/:id', async (req, res) => {
     try {
         const mascotaId = req.params.id;
         const idPerfil = req.user.idperfil; 
@@ -27,19 +27,19 @@ router.get('/mascota/:id', authenticateToken,async (req, res) => {
         res.status(500).json({ error: "Error al cargar la vista de mascota." });
     }
 });
-router.get('/agenda',authenticateToken,(req,res)=>res.render('agenda'));
+router.get('/agenda',(req,res)=>res.render('agenda'));
 router.get('/login',(req,res)=>res.render('login'));
 router.get("/logout", (req, res) => {
     res.clearCookie("myTokenName", { path: "/" });
     res.json({ message: "Sesión cerrada exitosamente" });
 });
-router.get("/misMascotas",authenticateToken,  (req, res) => {
+router.get("/misMascotas",  (req, res) => {
     const curp = req.user.curp; 
     res.render("mascotasduenio", { curp });
 });
 
 
-router.post('/veterinarios/guardar', authenticateToken,async (req, res) => {
+router.post('/veterinarios/guardar', async (req, res) => {
     const {
         cedula,
         nombre,
@@ -101,12 +101,10 @@ router.post("/login/exitoso", async (req, res) => {
             SELECT
                 u.password,
                 u.idperfil,
-                u.username,
-                c.curp  
+                u.username, 
             FROM
                 usuario AS u  
-            JOIN
-                cliente AS c ON u.id = c.idUsuario 
+
             WHERE
                 u.email = ?
         `, [email]);

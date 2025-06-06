@@ -1,12 +1,12 @@
 async function getEstados() 
 {    
-    const res = await fetch('http://localhost:3000/formMAscota/estados');
+    const res = await fetch('/formMAscota/estados');
     const resJson = await res.json();
     return resJson;
 }
 async function getMunicipios(estadoId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/municipios/${estadoId}`);
+        const res = await fetch(`/formMAscota/municipios/${estadoId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -16,7 +16,7 @@ async function getMunicipios(estadoId) {
 }
 async function getColonias(municipioId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/colonias/${municipioId}`);
+        const res = await fetch(`/formMAscota/colonias/${municipioId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -26,7 +26,7 @@ async function getColonias(municipioId) {
 }
 async function getEspecies() {
     try {
-        const res = await fetch('http://localhost:3000/formMAscota/especie');
+        const res = await fetch('/formMAscota/especie');
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -37,7 +37,7 @@ async function getEspecies() {
 
 async function getRazas(especieId) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/raza/${especieId}`);
+        const res = await fetch(`/formMAscota/raza/${especieId}`);
         if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return await res.json();
     } catch (error) {
@@ -47,7 +47,7 @@ async function getRazas(especieId) {
 }
 async function verificarExistenciaCliente(curp) {
     try {
-        const res = await fetch(`http://localhost:3000/formMAscota/cliente/${curp}`);
+        const res = await fetch(`/formMAscota/cliente/${curp}`);
         return await res.json();
     } catch (error) {
         console.error("Error al verificar cliente:", error);
@@ -57,7 +57,7 @@ async function verificarExistenciaCliente(curp) {
 
 async function obtenerListadoMascotas() {
     try {
-        const res = await fetch("http://localhost:3000/mascotas/listado");
+        const res = await fetch("/mascotas/listado");
         return await res.json();
     } catch (error) {
         console.error("Error al obtener listado de mascotas:", error);
@@ -67,7 +67,7 @@ async function obtenerListadoMascotas() {
 
  async function obtenerDetalleMascota(id) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/detalle/${id}`);
+        const res = await fetch(`/mascotas/detalle/${id}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener detalles de la mascota:", error);
@@ -77,7 +77,7 @@ async function obtenerListadoMascotas() {
 
 async function obtenerHistorialMascota(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/ultimaCons/${idMascota}`);
+        const res = await fetch(`/mascotas/ultimaCons/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener el historial médico:", error);
@@ -87,7 +87,7 @@ async function obtenerHistorialMascota(idMascota) {
 
 async function obtenerEnfermedad(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/enfermedad/cronica/${idMascota}`);
+        const res = await fetch(`/enfermedad/cronica/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener el historial médico:", error);
@@ -97,7 +97,7 @@ async function obtenerEnfermedad(idMascota) {
 
 async function obtenerUltimaVacuna(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/vacuna/${idMascota}`);
+        const res = await fetch(`/mascotas/vacuna/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener la última vacuna:", error);
@@ -107,7 +107,7 @@ async function obtenerUltimaVacuna(idMascota) {
 
 async function obtenerUltimaDesparasitacion(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/desparasitacion/${idMascota}`);
+        const res = await fetch(`/mascotas/desparasitacion/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener la última desparasitación:", error);
@@ -116,7 +116,7 @@ async function obtenerUltimaDesparasitacion(idMascota) {
 }
 async function obtenerHistorialVacunas(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/vacunas/${idMascota}`);
+        const res = await fetch(`/mascotas/vacunas/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener el historial de vacunas:", error);
@@ -125,7 +125,7 @@ async function obtenerHistorialVacunas(idMascota) {
 }
 async function obtenerHistorialDesparasitaciones(idMascota) {
     try {
-        const res = await fetch(`http://localhost:3000/mascotas/desparasitaciones/${idMascota}`);
+        const res = await fetch(`/mascotas/desparasitaciones/${idMascota}`);
         return await res.json();
     } catch (error) {
         console.error("Error al obtener el historial de desparasitaciones:", error);

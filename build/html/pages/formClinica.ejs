@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/head')%>
+        <title>CHECKVET - Registro</title>
+</head>
+
+<body>
+    <%- include('../partials/header')%>
+
+        <main role="main" class="py-4">
+            <div class="container">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="card-title text-center mb-0"><i class="bi bi-pencil-square me-2"></i>Registro de
+                            Clinica</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <form id="registro-form" novalidate>
+
+                            <!-- Sección Clinica -->
+                            <section class="form-section" aria-labelledby="datos-clinica-heading">
+                                <h2 id="datos-clinica-heading"><i class="bi bi-hospital"></i> Datos de Clinica
+                                </h2>
+
+
+                                <div class="row g-3">
+                                    <div class="col-md-5">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="nombre" name="nombre"
+                                                placeholder=" " required>
+                                            <label for="nombre" class="required-field">Nombre de la Clinica</label><input type="hidden" name="idEmpresa" value="1"> <!-- O el valor dinámico desde sesión -->
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </section>
+
+
+                            <!-- Sección Dirección -->
+                            <section class="form-section" aria-labelledby="datos-direccion-heading">
+                                <h2 id="datos-direccion-heading"><i class="bi bi-geo-alt me-2"></i>Datos de Dirección
+                                </h2>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="estado" name="estado" required>
+                                                <option value="" selected disabled>Seleccione una opción</option>
+                                            </select>
+                                            <label for="estado" class="required-field">Estado</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="Municipio" name="Municipio" required>
+                                            </select>
+                                            <label for="Municipio" class="required-field">Municipio/Alcaldía</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="Colonia" name="Colonia" required>
+                                            </select>
+                                            <label for="Colonia" class="required-field">Colonia</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="Calle" name="Calle"
+                                                placeholder=" " required>
+                                            <label for="Calle" class="required-field">Calle</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="numero" name="numero"
+                                                placeholder=" " required>
+                                            <label for="numero" class="required-field">Número Exterior</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="numeroInt" name="numeroInt"
+                                                placeholder=" ">
+                                            <label for="numeroInt">Número Interior</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="cp" name="cp" placeholder=" "
+                                                pattern="[0-9]{5}" required>
+                                            <label for="cp" class="required-field">Código Postal</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="referencias" name="referencias"
+                                                placeholder=" ">
+                                            <label for="referencias">Referencias</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <!-- Botones de acción -->
+                            <div class="d-flex justify-content-between mt-4">
+                                <button type="reset" class="btn btn-outline-secondary px-4">
+                                    <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                                </button>
+
+                                <button type="submit" class="btn btn-success px-4">
+                                    <i class="bi bi-save me-2"></i>Guardar Registro
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <%- include('../partials/footer')%>
+
+<script src="/js/clinica.js" defer></script>
+            
+</body>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+    const estadoSelect = document.getElementById("estado");
+    const municipioSelect = document.getElementById("Municipio");
+    const coloniaSelect = document.getElementById("Colonia");
+
+    // Deshabilitar selects dependientes al inicio
+    municipioSelect.disabled = true;
+    coloniaSelect.disabled = true;
+
+    // Cargar estados al inicio
+    const estados = await fetch("/clinicas/estados").then(r => r.json());
+    estados.forEach(e => {
+        estadoSelect.innerHTML += `<option value="${e.id}">${e.nombre}</option>`;
+    });
+
+    // Cuando se selecciona un estado
+    estadoSelect.addEventListener("change", async () => {
+        const idEstado = estadoSelect.value;
+
+        municipioSelect.innerHTML = `<option selected disabled>Seleccione un municipio</option>`;
+        coloniaSelect.innerHTML = `<option selected disabled>Seleccione una colonia</option>`;
+        municipioSelect.disabled = true;
+        coloniaSelect.disabled = true;
+
+        if (!idEstado) return;
+
+        const municipios = await fetch(`/clinicas/municipios/${idEstado}`).then(r => r.json());
+        municipios.forEach(m => {
+            municipioSelect.innerHTML += `<option value="${m.id}">${m.nombre}</option>`;
+        });
+
+        municipioSelect.disabled = false;
+    });
+
+    // Cuando se selecciona un municipio
+    municipioSelect.addEventListener("change", async () => {
+        const idMunicipio = municipioSelect.value;
+
+        coloniaSelect.innerHTML = `<option selected disabled>Seleccione una colonia</option>`;
+        coloniaSelect.disabled = true;
+
+        if (!idMunicipio) return;
+
+        const colonias = await fetch(`/clinicas/colonias/${idMunicipio}`).then(r => r.json());
+        colonias.forEach(c => {
+            coloniaSelect.innerHTML += `<option value="${c.id}">${c.nombre}</option>`;
+        });
+
+        coloniaSelect.disabled = false;
+    });
+});
+</script>
+
+
+</html>

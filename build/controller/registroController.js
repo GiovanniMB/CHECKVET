@@ -182,7 +182,7 @@ document.getElementById("registro-form").addEventListener("submit", async functi
     const datos = Object.fromEntries(formData.entries());
     console.log(datos)
     try {
-        const res = await fetch("http://localhost:3000/formMAscota/registro", {
+        const res = await fetch("/formMAscota/registro", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos),

@@ -1,6 +1,7 @@
 async function getCitas() 
 {    
-    const res = await fetch('http://localhost:3000/');
+    const res = await fetch('/citasHoy');
     const resJson = await res.json();
     return resJson;
 }
+ 

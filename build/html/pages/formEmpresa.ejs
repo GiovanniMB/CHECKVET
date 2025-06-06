@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('../partials/head')%>
+    <title>CHECKVET - Registro de Empresa</title>
+</head>
+
+<body>
+    <%- include('../partials/header')%>
+
+    <main role="main" class="py-4">
+        <div class="container">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success  text-white">
+                    <h4 class="card-title text-center mb-0">
+                        <i class="bi bi-building me-2"></i>Registro de Empresa
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <form id="registro-empresa-form" action="/empresa/registro" method="POST" novalidate>
+                        <!-- Sección Empresa -->
+                        <section class="form-section" aria-labelledby="datos-empresa-heading">
+                            <h2 id="datos-empresa-heading"><i class="bi bi-file-earmark-text"></i> Datos de Empresa</h2>
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="razonSocial" name="razonSocial"
+                                            placeholder=" " required>
+                                        <label for="razonSocial" class="required-field">Razón Social</label>
+                                    </div>
+                                </div>
+
+                                
+                            </div>
+                        </section>
+                        <section class="form-section" aria-labelledby="datos-usuario-heading">
+                                <h2 id="datos-usuario-heading"><i class="bi bi-shield-lock me-2"></i>Datos de Usuario
+                                </h2>
+
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                placeholder=" " required>
+                                            <label for="username" class="required-field">Nombre de Usuario</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder=" " required minlength="8">
+                                            <label for="password" class="required-field">Contraseña</label>
+                                            <small class="form-text text-muted">Mínimo 8 caracteres</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="confirmPassword"
+                                                name="confirmPassword" placeholder=" " required>
+                                            <label for="confirmPassword" class="required-field">Confirmar
+                                                Contraseña</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        <!-- Botones de acción -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="reset" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-counterclockwise me-2"></i>Limpiar
+                            </button>
+
+                            <button type="submit" class="btn btn-success  px-4">
+                                <i class="bi bi-save me-2"></i>Guardar Registro
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('../partials/footer')%>
+
+    <script src="/js/empresa.js" defer></script>
+
+</body>
+</html>
